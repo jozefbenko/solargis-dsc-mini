@@ -1,8 +1,8 @@
 {
   "shape": {
-    "sm": { "value": "2px" },
-    "md": { "value": "4px" },
-    "lg": { "value": "8px" },
-    "round": { "value": "9999px" }
+    "sm": { "value": "2px", "comment": "DSC: shape-xs" },
+    "md": { "value": "6px", "comment": "DSC: shape-m — default control radius" },
+    "lg": { "value": "8px", "comment": "DSC: shape-l — cards" },
+    "round": { "value": "9999px", "comment": "DSC: shape-full — pills" }
   }
 }

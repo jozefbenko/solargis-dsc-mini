@@ -1,15 +1,15 @@
 {
   "font": {
     "family": {
-      "sans": { "value": "'Inter', system-ui, sans-serif" },
+      "sans": { "value": "'IBM Plex Sans', system-ui, sans-serif", "comment": "DSC brand font" },
       "mono": { "value": "'JetBrains Mono', ui-monospace, monospace" }
     },
     "size": {
       "xs": { "value": "12px" },
-      "sm": { "value": "14px" },
-      "md": { "value": "16px" },
-      "lg": { "value": "20px" },
-      "xl": { "value": "24px" }
+      "sm": { "value": "13px" },
+      "md": { "value": "14px", "comment": "DSC base font size" },
+      "lg": { "value": "16px" },
+      "xl": { "value": "20px" }
     },
     "weight": {
       "regular": { "value": "400" },

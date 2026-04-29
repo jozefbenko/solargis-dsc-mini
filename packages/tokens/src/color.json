@@ -1,25 +1,28 @@
 {
   "color": {
-    "primary": { "value": "#0066cc" },
-    "primary-hover": { "value": "#0052a3" },
-    "primary-active": { "value": "#003d7a" },
+    "primary": { "value": "#de2121", "comment": "sg-red 50 — Solargis brand primary" },
+    "primary-hover": { "value": "#b11b1b", "comment": "sg-red 40" },
+    "primary-active": { "value": "#851414", "comment": "sg-red 30" },
     "on-primary": { "value": "#ffffff" },
 
-    "surface": { "value": "#ffffff" },
-    "on-surface": { "value": "#1a1a1a" },
-    "surface-variant": { "value": "#f5f7fa" },
-    "on-surface-variant": { "value": "#5a6470" },
+    "surface": { "value": "#ffffff", "comment": "sg-gray 100" },
+    "on-surface": { "value": "#424957", "comment": "sg-gray 30 — body text" },
+    "surface-variant": { "value": "#f3f4f6", "comment": "sg-gray 96 — subtle bg" },
+    "on-surface-variant": { "value": "#576072", "comment": "sg-gray 40 — secondary text" },
 
-    "outline": { "value": "#cfd4da" },
-    "outline-variant": { "value": "#e4e7eb" },
+    "outline": { "value": "#c9ccd2", "comment": "sg-gray 80 — borders" },
+    "outline-variant": { "value": "#e3e5e8", "comment": "sg-gray 90 — dividers" },
 
-    "error": { "value": "#d32f2f" },
+    "error": {
+      "value": "#f75208",
+      "comment": "sg-orange 50 — DSC palette error role (avoids clash with brand red)"
+    },
     "on-error": { "value": "#ffffff" },
-    "warning": { "value": "#ed6c02" },
-    "on-warning": { "value": "#ffffff" },
-    "success": { "value": "#2e7d32" },
+    "warning": { "value": "#ffa200", "comment": "sg-yellow 50" },
+    "on-warning": { "value": "#332100", "comment": "sg-yellow 10 — dark text required on amber" },
+    "success": { "value": "#467623", "comment": "sg-green 30 — darkened for white-text contrast" },
     "on-success": { "value": "#ffffff" },
-    "info": { "value": "#0288d1" },
+    "info": { "value": "#1066ef", "comment": "sg-electric 50" },
     "on-info": { "value": "#ffffff" }
   }
 }

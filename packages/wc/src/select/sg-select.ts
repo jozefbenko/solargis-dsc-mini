@@ -24,7 +24,7 @@ export class SgSelect extends LitElement {
       color: var(--sg-color-on-surface);
       cursor: pointer;
       appearance: none;
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3e%3cpath stroke='%231a1a1a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none' d='M2 4l4 4 4-4'/%3e%3c/svg%3e");
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3e%3cpath stroke='%23424957' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none' d='M2 4l4 4 4-4'/%3e%3c/svg%3e");
       background-repeat: no-repeat;
       background-position: right var(--sg-space-md) center;
       background-size: 12px;
