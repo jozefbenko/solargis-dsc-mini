@@ -10,7 +10,9 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: [/^lit($|\/)/],
+      // Lit is bundled — the WC dist is consumed both by npm packages and by
+      // CDN/HTML artifacts that have no module resolver. Bundling Lit (~10kb gz)
+      // makes the artifact path work without an importmap.
     },
     sourcemap: true,
     target: 'es2022',

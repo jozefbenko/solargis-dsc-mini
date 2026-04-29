@@ -2,7 +2,16 @@
 
 Design essentials as a standalone package for small projects — and a deterministic frontend vocabulary for Claude artifacts.
 
-Tracking issue: [UX-559](https://solargis.atlassian.net/browse/UX-559)
+**Live:** [jozefbenko.github.io/solargis-dsc-mini](https://jozefbenko.github.io/solargis-dsc-mini/) · **Tracking:** [UX-559](https://solargis.atlassian.net/browse/UX-559)
+
+## Use it in a Claude HTML artifact
+
+```html
+<link rel="stylesheet" href="https://jozefbenko.github.io/solargis-dsc-mini/tokens.css">
+<script type="module" src="https://jozefbenko.github.io/solargis-dsc-mini/wc.js"></script>
+```
+
+The MCP injects [`prompts/artifact-claude.md`](./prompts/artifact-claude.md) (also published at [the deployed URL](https://jozefbenko.github.io/solargis-dsc-mini/prompts/artifact-claude.md)) as the system prompt for Claude artifact rendering.
 
 ## Why
 

@@ -5,6 +5,11 @@ dist/
 coverage/
 tmp/
 
+# docs/ holds the GH Pages build. index.html is committed; built artifacts are not.
+docs/tokens.css
+docs/wc.js
+docs/prompts/
+
 .DS_Store
 *.log
 npm-debug.log*

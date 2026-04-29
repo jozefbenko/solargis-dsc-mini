@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Solargis DSC-mini</title>
+    <meta
+      name="description"
+      content="Solargis Design System mini — design essentials for small projects and Claude artifacts."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+    <link rel="stylesheet" href="./tokens.css" />
+    <script type="module" src="./wc.js"></script>
+    <style>
+      body {
+        font-family: 'IBM Plex Sans', system-ui, sans-serif;
+        font-size: var(--sg-font-size-md);
+        color: var(--sg-color-on-surface);
+        background: var(--sg-color-surface);
+        margin: 0;
+      }
+      .container {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: var(--sg-space-2xl) var(--sg-space-lg);
+      }
+      header {
+        border-bottom: 1px solid var(--sg-color-outline-variant);
+        margin-bottom: var(--sg-space-2xl);
+        padding-bottom: var(--sg-space-lg);
+      }
+      h1 {
+        font-size: 28px;
+        font-weight: var(--sg-font-weight-bold);
+        margin: 0 0 var(--sg-space-sm) 0;
+      }
+      .tag {
+        color: var(--sg-color-on-surface-variant);
+        font-size: var(--sg-font-size-sm);
+        margin: 0;
+      }
+      .tag a {
+        color: var(--sg-color-primary);
+        text-decoration: none;
+      }
+      .tag a:hover {
+        text-decoration: underline;
+      }
+      h2 {
+        font-size: var(--sg-font-size-xl);
+        font-weight: var(--sg-font-weight-medium);
+        margin: var(--sg-space-2xl) 0 var(--sg-space-md) 0;
+      }
+      h3 {
+        font-size: var(--sg-font-size-lg);
+        font-weight: var(--sg-font-weight-medium);
+        margin: 0 0 var(--sg-space-sm) 0;
+      }
+      pre {
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 12.5px;
+        background: var(--sg-color-surface-variant);
+        color: var(--sg-color-on-surface);
+        padding: var(--sg-space-md);
+        border-radius: var(--sg-shape-md);
+        overflow-x: auto;
+        margin: 0;
+      }
+      code {
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 0.92em;
+        background: var(--sg-color-surface-variant);
+        padding: 1px 6px;
+        border-radius: var(--sg-shape-sm);
+      }
+      .row {
+        display: flex;
+        gap: var(--sg-space-md);
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: var(--sg-space-md);
+      }
+      .col {
+        display: flex;
+        flex-direction: column;
+        gap: var(--sg-space-md);
+        max-width: 400px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--sg-space-md);
+      }
+      .label {
+        font-size: var(--sg-font-size-sm);
+        color: var(--sg-color-on-surface-variant);
+        min-width: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Solargis DSC-mini</h1>
+        <p class="tag">
+          Design essentials for small projects and Claude artifacts.
+          <a href="https://github.com/jozefbenko/solargis-dsc-mini">GitHub</a> ·
+          <a href="https://solargis.atlassian.net/browse/UX-559">UX-559</a>
+        </p>
+      </header>
+
+      <h2>Use it in a Claude HTML artifact</h2>
+      <p>Two lines and you've got brand-aligned components and tokens:</p>
+      <pre>&lt;link rel="stylesheet" href="https://jozefbenko.github.io/solargis-dsc-mini/tokens.css"&gt;
+&lt;script type="module" src="https://jozefbenko.github.io/solargis-dsc-mini/wc.js"&gt;&lt;/script&gt;</pre>
+
+      <p>
+        Then use any <code>&lt;sg-*&gt;</code> tag below. The MCP injects
+        <a href="./prompts/artifact-claude.md">artifact-claude.md</a> as the system prompt for
+        Claude artifact rendering.
+      </p>
+
+      <h2>Buttons</h2>
+      <div class="row">
+        <span class="label">solid</span>
+        <sg-button size="sm">Small</sg-button>
+        <sg-button>Default</sg-button>
+        <sg-button size="lg">Large</sg-button>
+        <sg-button disabled>Disabled</sg-button>
+      </div>
+      <div class="row">
+        <span class="label">variants</span>
+        <sg-button variant="solid">Solid</sg-button>
+        <sg-button variant="tonal">Tonal</sg-button>
+        <sg-button variant="outline">Outline</sg-button>
+        <sg-button variant="ghost">Ghost</sg-button>
+        <sg-button variant="danger">Danger</sg-button>
+      </div>
+
+      <h2>Form fields</h2>
+      <div class="col">
+        <div>
+          <sg-label required>Email</sg-label>
+          <sg-input type="email" placeholder="you@example.com"></sg-input>
+        </div>
+        <div>
+          <sg-label>Disabled</sg-label>
+          <sg-input value="locked" disabled></sg-input>
+        </div>
+        <div>
+          <sg-label>Invalid</sg-label>
+          <sg-input value="bad@" invalid></sg-input>
+        </div>
+        <div>
+          <sg-label>Country</sg-label>
+          <sg-select id="select"></sg-select>
+        </div>
+      </div>
+
+      <h2>Choice controls</h2>
+      <div class="row">
+        <sg-checkbox checked>Accept terms</sg-checkbox>
+        <sg-checkbox>Subscribe</sg-checkbox>
+        <sg-checkbox disabled>Disabled</sg-checkbox>
+      </div>
+      <div class="row">
+        <sg-radio name="plan" value="free" checked>Free</sg-radio>
+        <sg-radio name="plan" value="pro">Pro</sg-radio>
+        <sg-radio name="plan" value="ent">Enterprise</sg-radio>
+      </div>
+      <div class="row">
+        <sg-switch checked>Notifications</sg-switch>
+        <sg-switch>Dark mode</sg-switch>
+        <sg-switch disabled>Disabled</sg-switch>
+      </div>
+
+      <h2>Status indicators</h2>
+      <div class="row">
+        <span class="label">badges</span>
+        <sg-badge>3</sg-badge>
+        <sg-badge variant="success">OK</sg-badge>
+        <sg-badge variant="warning">!</sg-badge>
+        <sg-badge variant="error">12</sg-badge>
+        <sg-badge variant="info">i</sg-badge>
+        <sg-badge variant="neutral">42</sg-badge>
+      </div>
+      <div class="row">
+        <span class="label">chips</span>
+        <sg-chip>Filter</sg-chip>
+        <sg-chip variant="primary">Active</sg-chip>
+        <sg-chip removable>Removable</sg-chip>
+      </div>
+      <div class="row">
+        <span class="label">spinners</span>
+        <sg-spinner size="sm"></sg-spinner>
+        <sg-spinner></sg-spinner>
+        <sg-spinner size="lg"></sg-spinner>
+      </div>
+
+      <h2>Progress</h2>
+      <div class="col">
+        <sg-progress value="33"></sg-progress>
+        <sg-progress value="66"></sg-progress>
+        <sg-progress value="100"></sg-progress>
+        <sg-progress indeterminate></sg-progress>
+      </div>
+
+      <h2>Alerts</h2>
+      <div class="col">
+        <sg-alert variant="info">Heads up — info message.</sg-alert>
+        <sg-alert variant="success">Saved successfully.</sg-alert>
+        <sg-alert variant="warning">Check your input.</sg-alert>
+        <sg-alert variant="error">Something went wrong.</sg-alert>
+      </div>
+
+      <h2>Cards</h2>
+      <div class="grid">
+        <sg-card>
+          <h3 slot="header">Solar yield</h3>
+          <p>1,234 kWh generated this month.</p>
+          <div slot="footer">
+            <sg-button size="sm" variant="ghost">View report</sg-button>
+          </div>
+        </sg-card>
+        <sg-card elevation="3">
+          <h3 slot="header">Site status</h3>
+          <p>All systems operational.</p>
+        </sg-card>
+      </div>
+
+      <h2>Tabs</h2>
+      <sg-tabs id="tabs">
+        <div slot="panel-0">Overview content goes here.</div>
+        <div slot="panel-1">Analytics content goes here.</div>
+        <div slot="panel-2">Settings content goes here.</div>
+      </sg-tabs>
+
+      <h2>Accordion</h2>
+      <div>
+        <sg-accordion-item heading="What is DSC-mini?" open>
+          A standalone slim version of the Solargis Design System for small projects and Claude
+          artifacts.
+        </sg-accordion-item>
+        <sg-accordion-item heading="How is it different from DSC?">
+          Fewer override knobs, fewer components, opinionated defaults.
+        </sg-accordion-item>
+        <sg-accordion-item heading="Can I use it in React?">
+          Yes — via the shadcn theme package, or by importing the web components directly.
+        </sg-accordion-item>
+      </div>
+
+      <h2>Modal</h2>
+      <div class="row">
+        <sg-button id="open-modal">Open modal</sg-button>
+      </div>
+      <sg-modal id="modal">
+        <h3 slot="header">Confirm action</h3>
+        <p>Are you sure you want to delete this site? This cannot be undone.</p>
+        <div slot="footer">
+          <sg-button variant="ghost" id="cancel">Cancel</sg-button>
+          <sg-button variant="danger" id="confirm">Delete</sg-button>
+        </div>
+      </sg-modal>
+
+      <h2>Token vocabulary</h2>
+      <p>
+        For permitted custom CSS (layout only), use these CSS variables. See
+        <a href="./tokens.css">tokens.css</a> for the full list.
+      </p>
+      <pre>color:    --sg-color-{primary,on-primary,primary-container,on-primary-container,
+          surface,on-surface,surface-variant,on-surface-variant,
+          outline,outline-variant,
+          error,warning,success,info, ...}
+space:    --sg-space-{xs,sm,md,lg,xl,2xl}      (4 / 8 / 12 / 16 / 24 / 32)
+shape:    --sg-shape-{sm,md,lg,round}          (2 / 6 / 8 / 9999)
+font:     --sg-font-family-{sans,mono}, --sg-font-size-{xs,sm,md,lg,xl}
+elev:     --sg-elevation-{0,1,2,3,4}
+motion:   --sg-duration-{fast,normal,slow}, --sg-easing-standard
+z-index:  --sg-z-{dropdown,sticky,overlay,modal,toast}</pre>
+    </div>
+
+    <script type="module">
+      const select = document.getElementById('select');
+      select.options = [
+        { value: 'sk', label: 'Slovakia' },
+        { value: 'cz', label: 'Czech Republic' },
+        { value: 'at', label: 'Austria' },
+        { value: 'de', label: 'Germany' },
+      ];
+      select.value = 'sk';
+
+      const tabs = document.getElementById('tabs');
+      tabs.tabs = ['Overview', 'Analytics', 'Settings'];
+
+      const modal = document.getElementById('modal');
+      document.getElementById('open-modal').addEventListener('click', () => (modal.open = true));
+      document.getElementById('cancel').addEventListener('click', () => (modal.open = false));
+      document.getElementById('confirm').addEventListener('click', () => (modal.open = false));
+    </script>
+  </body>
+</html>
