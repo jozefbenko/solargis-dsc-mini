@@ -61,6 +61,20 @@ export class SgButton extends LitElement {
       border-color: var(--sg-color-primary);
     }
 
+    :host([variant='tonal']) button {
+      background: var(--sg-color-primary-container);
+      border-color: var(--sg-color-primary-container);
+      color: var(--sg-color-on-primary-container);
+    }
+    :host([variant='tonal']) button:hover:not(:disabled) {
+      background: var(--sg-color-primary-container-hover);
+      border-color: var(--sg-color-primary-container-hover);
+    }
+    :host([variant='tonal']) button:active:not(:disabled) {
+      background: var(--sg-color-primary-container-hover);
+      border-color: var(--sg-color-primary-container-hover);
+    }
+
     :host([variant='danger']) button {
       background: var(--sg-color-error);
       border-color: var(--sg-color-error);
@@ -71,8 +85,9 @@ export class SgButton extends LitElement {
   @property({ type: Boolean, reflect: true }) accessor disabled = false;
   @property({ type: String, reflect: true }) accessor variant:
     | 'solid'
-    | 'ghost'
+    | 'tonal'
     | 'outline'
+    | 'ghost'
     | 'danger' = 'solid';
   @property({ type: String, reflect: true }) accessor size: 'sm' | 'md' | 'lg' = 'md';
 

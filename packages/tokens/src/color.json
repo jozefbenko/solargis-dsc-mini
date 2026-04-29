@@ -4,6 +4,9 @@
     "primary-hover": { "value": "#b11b1b", "comment": "sg-red 40" },
     "primary-active": { "value": "#851414", "comment": "sg-red 30" },
     "on-primary": { "value": "#ffffff" },
+    "primary-container": { "value": "#f8d3d3", "comment": "sg-red 90 — tonal bg" },
+    "primary-container-hover": { "value": "#f2a6a6", "comment": "sg-red 80" },
+    "on-primary-container": { "value": "#851414", "comment": "sg-red 30 — text on tonal" },
 
     "surface": { "value": "#ffffff", "comment": "sg-gray 100" },
     "on-surface": { "value": "#424957", "comment": "sg-gray 30 — body text" },
