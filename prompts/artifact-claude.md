@@ -28,7 +28,9 @@ The Solargis Design System (DSC) is the full Angular Material library used in pr
 
 ### Required preamble
 
-Every Solargis HTML artifact starts with:
+Claude artifacts run in a sandboxed iframe with a strict Content-Security-Policy. The **only** external origins allowed for scripts and styles are `cdnjs.cloudflare.com`, `claudeusercontent.com`, and (style-src only) `fonts.googleapis.com`. **Do not attempt to load `tokens.css` or `wc.js` from any other URL** — `*.github.io`, `cdn.jsdelivr.net/gh/...`, `unpkg.com` are all blocked.
+
+Because `'unsafe-inline'` is allowed for both `script-src` and `style-src`, the working pattern is **inline injection**. The MCP injects the contents of `tokens.css` and `wc.js` directly into the system prompt; you copy them verbatim into the artifact as inline `<style>` and `<script>` blocks:
 
 ```html
 <!doctype html>
@@ -41,14 +43,15 @@ Every Solargis HTML artifact starts with:
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&display=swap"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/jozefbenko/solargis-dsc-mini@main/docs/tokens.css"
-    />
-    <script
-      type="module"
-      src="https://cdn.jsdelivr.net/gh/jozefbenko/solargis-dsc-mini@main/docs/wc.js"
-    ></script>
+
+    <style id="dsc-mini-tokens">
+      {{INLINE_TOKENS_CSS}}
+    </style>
+
+    <script id="dsc-mini-wc" type="module">
+      {{INLINE_WC_JS}}
+    </script>
+
     <style>
       body {
         font-family: 'IBM Plex Sans', system-ui, sans-serif;
@@ -66,17 +69,17 @@ Every Solargis HTML artifact starts with:
 </html>
 ```
 
-**Always use jsDelivr** for the tokens and WC bundle — it's allowed by the Claude artifact CSP, unlike GitHub Pages (`*.github.io`). The `@main` ref always points at the latest commit; jsDelivr caches for ~12h.
+The MCP substitutes `{{INLINE_TOKENS_CSS}}` and `{{INLINE_WC_JS}}` with the actual file contents at injection time.
 
 ### Brand assets
 
-Solargis logos and other hosted images live under the same CDN:
+Image origins are governed by `img-src` (not `script-src`/`style-src`) and the Claude artifact CSP is more permissive there. **Hosted SVGs from jsDelivr work** for `<img src="…">` tags:
 
 ```
 https://cdn.jsdelivr.net/gh/jozefbenko/solargis-dsc-mini@main/docs/assets/<filename>
 ```
 
-Available files: `logo-placeholder.svg`, `wordmark-placeholder.svg`. When you need a logo for the artifact (header, footer, branding), use these URLs in `<img src="…">`.
+Available: `logo-placeholder.svg`, `wordmark-placeholder.svg`. If `img-src` is also restricted in your context, fall back to **inline SVG** — copy the `<svg>` markup directly into the artifact.
 
 ### Component catalog
 

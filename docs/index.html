@@ -114,21 +114,29 @@
         </p>
       </header>
 
-      <h2>Use it in a Claude HTML artifact</h2>
-      <p>Two lines and you've got brand-aligned components and tokens:</p>
+      <h2>Use it in a regular web page</h2>
+      <p>Two lines from the jsDelivr CDN:</p>
       <pre>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jozefbenko/solargis-dsc-mini@main/docs/tokens.css"&gt;
 &lt;script type="module" src="https://cdn.jsdelivr.net/gh/jozefbenko/solargis-dsc-mini@main/docs/wc.js"&gt;&lt;/script&gt;</pre>
 
+      <h2>Use it in a Claude artifact</h2>
       <p>
-        Use jsDelivr — Claude's artifact CSP blocks <code>*.github.io</code>. Same code, allowed
-        origin. Hosted brand assets (logos) live under
-        <code>cdn.jsdelivr.net/gh/jozefbenko/solargis-dsc-mini@main/docs/assets/</code>.
+        Different story. Claude artifacts run in a sandboxed iframe whose CSP only allows scripts
+        and styles from <code>cdnjs.cloudflare.com</code> and <code>claudeusercontent.com</code>
+        (plus <code>fonts.googleapis.com</code> for styles). jsDelivr and GitHub Pages are both
+        blocked.
+      </p>
+      <p>
+        The working pattern is <strong>inline injection</strong>: the MCP injects the contents of
+        <code>tokens.css</code> and <code>wc.js</code> into the artifact-rendering Claude's system
+        prompt, which pastes them as inline <code>&lt;style&gt;</code> and
+        <code>&lt;script&gt;</code> blocks. <code>'unsafe-inline'</code> is permitted in the CSP, so
+        this works reliably. See <a href="./prompts/artifact-claude.md">artifact-claude.md</a> for
+        the full preamble template.
       </p>
       <p>
         Then use any <code>&lt;sg-*&gt;</code> tag below. See a full composition in the
-        <a href="./example.html">PV site yield estimator example</a>. The MCP injects
-        <a href="./prompts/artifact-claude.md">artifact-claude.md</a> as the system prompt for
-        Claude artifact rendering.
+        <a href="./example.html">PV site yield estimator example</a>.
       </p>
 
       <h2>Buttons</h2>

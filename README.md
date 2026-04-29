@@ -6,14 +6,20 @@ Design essentials as a standalone package for small projects — and a determini
 
 ## Use it in a Claude HTML artifact
 
+Claude artifacts run in a sandboxed iframe whose CSP only allows scripts and styles from `cdnjs.cloudflare.com` and `claudeusercontent.com` (plus `fonts.googleapis.com` for styles). Both jsDelivr and GitHub Pages are **blocked**.
+
+The working path is **inline injection** — the MCP includes the contents of `tokens.css` and `wc.js` in the system prompt; the artifact pastes them as inline `<style>` and `<script>` blocks. `'unsafe-inline'` is permitted for both directives, so this works reliably. See [`prompts/artifact-claude.md`](./prompts/artifact-claude.md) for the full preamble template.
+
+## Use it in a regular web page
+
+Outside the artifact sandbox, the CDN URLs are fine:
+
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jozefbenko/solargis-dsc-mini@main/docs/tokens.css">
 <script type="module" src="https://cdn.jsdelivr.net/gh/jozefbenko/solargis-dsc-mini@main/docs/wc.js"></script>
 ```
 
-**Always jsDelivr** — Claude's artifact CSP blocks `*.github.io`. Same code, allowed origin.
-
-The MCP injects [`prompts/artifact-claude.md`](./prompts/artifact-claude.md) as the system prompt for Claude artifact rendering. Brand assets live under [`docs/assets/`](./docs/assets/) and are served from the same jsDelivr URL prefix.
+Brand assets (logos) live under [`docs/assets/`](./docs/assets/) and are served from the same jsDelivr URL prefix; image-loading is more permissive even inside Claude artifacts.
 
 ## Why
 
