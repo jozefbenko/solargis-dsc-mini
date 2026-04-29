@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DSC-mini · WC playground</title>
+    <link rel="stylesheet" href="../tokens/dist/tokens.css" />
+    <style>
+      body {
+        font-family: var(--sg-font-family-sans);
+        font-size: var(--sg-font-size-md);
+        color: var(--sg-color-on-surface);
+        background: var(--sg-color-surface);
+        margin: 0;
+        padding: var(--sg-space-2xl);
+        display: flex;
+        flex-direction: column;
+        gap: var(--sg-space-xl);
+      }
+      h1 {
+        font-size: var(--sg-font-size-xl);
+        font-weight: var(--sg-font-weight-bold);
+        margin: 0;
+      }
+      section {
+        display: flex;
+        flex-direction: column;
+        gap: var(--sg-space-md);
+      }
+      .row {
+        display: flex;
+        gap: var(--sg-space-md);
+        align-items: center;
+      }
+      .label {
+        font-size: var(--sg-font-size-sm);
+        color: var(--sg-color-outline);
+        min-width: 120px;
+      }
+    </style>
+    <script type="module" src="/src/index.ts"></script>
+  </head>
+  <body>
+    <h1>DSC-mini · WC playground</h1>
+
+    <section>
+      <div class="row">
+        <span class="label">solid (default)</span>
+        <sg-button>Click me</sg-button>
+        <sg-button disabled>Disabled</sg-button>
+      </div>
+      <div class="row">
+        <span class="label">ghost</span>
+        <sg-button variant="ghost">Click me</sg-button>
+        <sg-button variant="ghost" disabled>Disabled</sg-button>
+      </div>
+    </section>
+  </body>
+</html>
