@@ -1,0 +1,12 @@
+{
+  "color": {
+    "primary": { "value": "#0066cc" },
+    "on-primary": { "value": "#ffffff" },
+    "surface": { "value": "#ffffff" },
+    "on-surface": { "value": "#1a1a1a" },
+    "outline": { "value": "#cfd4da" },
+    "error": { "value": "#d32f2f" },
+    "warning": { "value": "#ed6c02" },
+    "success": { "value": "#2e7d32" }
+  }
+}

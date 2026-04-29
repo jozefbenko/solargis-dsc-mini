@@ -1,0 +1,28 @@
+/*
+ * Solargis DSC-mini — shadcn/React theme.
+ *
+ * Maps DSC-mini tokens onto shadcn's CSS variable convention so shadcn
+ * primitives render in Solargis brand colors with no component code change.
+ *
+ * Import alongside the tokens CSS:
+ *   @import '@solargis/dsc-mini-tokens/css';
+ *   @import '@solargis/dsc-mini-react/styles';
+ */
+
+@import url('@solargis/dsc-mini-tokens/css');
+
+:root {
+  --background: var(--sg-color-surface);
+  --foreground: var(--sg-color-on-surface);
+
+  --primary: var(--sg-color-primary);
+  --primary-foreground: var(--sg-color-on-primary);
+
+  --border: var(--sg-color-outline);
+  --input: var(--sg-color-outline);
+
+  --destructive: var(--sg-color-error);
+  --destructive-foreground: var(--sg-color-on-primary);
+
+  --radius: var(--sg-shape-md);
+}

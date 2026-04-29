@@ -13,28 +13,61 @@ Two problems, one shared spine:
 
 ## Architecture
 
-Four parts sharing a token spine:
+Three packages on a token spine. The prototyping MCP is a **separate repo** that consumes the React/shadcn theme and patterns from this one.
 
-1. **Tokens** — CSS variables. Brand source of truth.
-2. **Web Components** — `<sg-button>`, `<sg-input>`, `<sg-card>`, etc. The actual shipped library. Consumed by small Solargis apps (Angular/vanilla via custom elements) and by HTML artifacts in Claude (CDN script tag).
-3. **React/shadcn theme** — tokens applied to shadcn primitives that ship with Claude React artifacts. Not a separate package — a CSS file + patterns doc, served by the MCP.
-4. **MCP content layer** — scaffolds, patterns, and routing rules:
-   - Inline visualizer → explanations (claude.ai-native, not branded)
-   - HTML artifact with DSC-mini WCs → prototyping
-   - Markdown/prose → default
+1. **`@solargis/dsc-mini-tokens`** — CSS variables + JS object. Brand source of truth, built with Style Dictionary.
+2. **`@solargis/dsc-mini-wc`** — `<sg-button>`, `<sg-input>`, `<sg-card>`, etc. Lit-based custom elements. Consumed by small Solargis apps (Angular/vanilla via custom elements) and by HTML artifacts in Claude (CDN script tag).
+3. **`@solargis/dsc-mini-react`** — tokens applied to shadcn primitives via CSS variable mapping, plus a `patterns.md` doc. Static assets, served by the prototyping MCP for Claude React artifacts.
+
+The MCP routes work to the right surface (inline visualizer / HTML artifact / markdown) and consumes (2) and (3) — but lives in its own repo.
 
 ## Scope
 
-Full mirror of DSC in WC form: primitives (button, input, select, checkbox, radio, switch, card, modal, label, typography), navigation and layout, data display (table, list, badge, chip), feedback (toast, alert, progress), and the more complex widgets (date picker, autocomplete, tabs, accordion, tree). MCP content layer covers the full scaffold and pattern catalog.
+Full mirror of DSC in WC form: primitives (button, input, select, checkbox, radio, switch, card, modal, label, typography), navigation and layout, data display (table, list, badge, chip), feedback (toast, alert, progress), and the more complex widgets (date picker, autocomplete, tabs, accordion, tree).
 
 Roughly matches DSC visually — not pixel-perfect.
 
 ## Principles
 
 - **Opinionated over flexible** — tags encode visual decisions; few override knobs.
-- **Claude modifies, doesn't decide** — MCP serves complete scaffolds; Claude edits, doesn't compose from scratch.
+- **Claude modifies, doesn't decide** — the MCP serves complete scaffolds; Claude edits, doesn't compose from scratch.
 - **Tokens are the spine** — drift between DSC and DSC-mini is acceptable; drift within DSC-mini is not.
+
+## Stack
+
+Maximally modern, minimal tool surface:
+
+| Concern | Tool |
+|---|---|
+| Runtime, package manager, workspaces, test runner | **Bun 1.3** |
+| Library bundler | **Vite 7** (Rollup-based, with esbuild transform) |
+| Lint + format | **Biome 2** |
+| WC framework | **Lit 3** (standard / stage-3 decorators) |
+| Token compiler | **Style Dictionary 4** |
+
+## Layout
+
+```
+packages/
+├── tokens/   # Style Dictionary → CSS vars + JS
+├── wc/       # Lit custom elements
+└── react/    # CSS theme + patterns.md (no build)
+```
+
+## Common commands
+
+```bash
+bun install              # install everything
+bun test                 # run tests across the workspace
+bun run lint             # biome check
+bun run check            # biome check --write (auto-fix)
+bun run build            # build all packages
+
+# Per-package
+bun run --filter @solargis/dsc-mini-tokens build
+bun run --filter @solargis/dsc-mini-wc dev
+```
 
 ## Status
 
-Early scaffolding — repo created, stack not yet chosen.
+Scaffolding in place. `sg-button` is a smoke-test component proving the token → component pipeline. Component buildout begins next.

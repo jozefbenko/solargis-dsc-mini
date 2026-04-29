@@ -1,0 +1,22 @@
+{
+  "name": "@solargis/dsc-mini-tokens",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Solargis DSC-mini design tokens — brand source of truth (CSS vars + JS).",
+  "main": "./dist/tokens.js",
+  "exports": {
+    ".": "./dist/tokens.js",
+    "./css": "./dist/tokens.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "style-dictionary build --config style-dictionary.config.js",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "style-dictionary": "^4.0.0"
+  }
+}

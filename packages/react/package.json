@@ -1,0 +1,21 @@
+{
+  "name": "@solargis/dsc-mini-react",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Solargis DSC-mini theme for shadcn/React — CSS file + patterns doc, consumed by the MCP.",
+  "exports": {
+    "./styles": "./styles/index.css",
+    "./patterns": "./patterns.md"
+  },
+  "files": [
+    "styles",
+    "patterns.md"
+  ],
+  "scripts": {
+    "build": "echo 'react package: static assets, nothing to build'"
+  },
+  "devDependencies": {
+    "@solargis/dsc-mini-tokens": "workspace:*"
+  }
+}
