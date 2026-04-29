@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PV Site Yield Estimator · DSC-mini example</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&display=swap"
+    />
+    <link rel="stylesheet" href="./tokens.css" />
+    <script type="module" src="./wc.js"></script>
+    <style>
+      body {
+        font-family: 'IBM Plex Sans', system-ui, sans-serif;
+        font-size: var(--sg-font-size-md);
+        color: var(--sg-color-on-surface);
+        background: var(--sg-color-surface-variant);
+        margin: 0;
+      }
+      header {
+        background: var(--sg-color-surface);
+        border-bottom: 1px solid var(--sg-color-outline-variant);
+        padding: var(--sg-space-md) var(--sg-space-xl);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--sg-space-md);
+      }
+      header h1 {
+        font-size: var(--sg-font-size-lg);
+        font-weight: var(--sg-font-weight-medium);
+        margin: 0;
+      }
+      header .meta {
+        display: flex;
+        gap: var(--sg-space-sm);
+        align-items: center;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: var(--sg-space-xl);
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        gap: var(--sg-space-xl);
+      }
+      @media (max-width: 800px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+      .form-row {
+        display: flex;
+        flex-direction: column;
+        gap: var(--sg-space-xs);
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--sg-space-md);
+      }
+      .actions {
+        display: flex;
+        gap: var(--sg-space-sm);
+        margin-top: var(--sg-space-lg);
+      }
+      .results {
+        display: flex;
+        flex-direction: column;
+        gap: var(--sg-space-md);
+      }
+      .yield-figure {
+        display: flex;
+        align-items: baseline;
+        gap: var(--sg-space-sm);
+        margin: var(--sg-space-md) 0;
+      }
+      .yield-figure .value {
+        font-size: 36px;
+        font-weight: var(--sg-font-weight-bold);
+        color: var(--sg-color-primary);
+        line-height: 1;
+      }
+      .yield-figure .unit {
+        font-size: var(--sg-font-size-md);
+        color: var(--sg-color-on-surface-variant);
+      }
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--sg-space-md);
+      }
+      .stat {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .stat-label {
+        font-size: var(--sg-font-size-xs);
+        color: var(--sg-color-on-surface-variant);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      .stat-value {
+        font-size: var(--sg-font-size-lg);
+        font-weight: var(--sg-font-weight-medium);
+      }
+      .chart {
+        height: 160px;
+        background: linear-gradient(
+          to top,
+          color-mix(in srgb, var(--sg-color-primary) 12%, transparent),
+          transparent 80%
+        );
+        border-radius: var(--sg-shape-md);
+        position: relative;
+        margin-top: var(--sg-space-md);
+        display: flex;
+        align-items: flex-end;
+        padding: 0 var(--sg-space-sm);
+        gap: 4px;
+      }
+      .chart .bar {
+        flex: 1;
+        background: var(--sg-color-primary);
+        border-radius: var(--sg-shape-sm) var(--sg-shape-sm) 0 0;
+        opacity: 0.85;
+        transition: height var(--sg-duration-slow) var(--sg-easing-standard);
+      }
+      .chart .bar:hover {
+        opacity: 1;
+      }
+      .chart-axis {
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+        color: var(--sg-color-on-surface-variant);
+        margin-top: 6px;
+        padding: 0 var(--sg-space-sm);
+      }
+      footer {
+        text-align: center;
+        padding: var(--sg-space-xl);
+        font-size: var(--sg-font-size-sm);
+        color: var(--sg-color-on-surface-variant);
+      }
+      footer a {
+        color: var(--sg-color-primary);
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>PV Site Yield Estimator</h1>
+      <div class="meta">
+        <sg-chip variant="primary">Demo</sg-chip>
+        <sg-badge variant="success">Operational</sg-badge>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="layout">
+        <!-- Form column -->
+        <sg-card>
+          <h2 slot="header">Site configuration</h2>
+
+          <div class="form-row">
+            <sg-label required>Site name</sg-label>
+            <sg-input id="name" value="Bratislava rooftop"></sg-input>
+          </div>
+
+          <div class="form-row" style="margin-top: var(--sg-space-md)">
+            <sg-label required>Location</sg-label>
+            <sg-select id="location"></sg-select>
+          </div>
+
+          <div class="form-grid" style="margin-top: var(--sg-space-md)">
+            <div class="form-row">
+              <sg-label required>System size</sg-label>
+              <sg-input id="size" type="number" value="50"></sg-input>
+            </div>
+            <div class="form-row">
+              <sg-label>Tilt (°)</sg-label>
+              <sg-input id="tilt" type="number" value="35"></sg-input>
+            </div>
+            <div class="form-row">
+              <sg-label>Azimuth (°)</sg-label>
+              <sg-input id="azimuth" type="number" value="180"></sg-input>
+            </div>
+            <div class="form-row">
+              <sg-label>Performance loss</sg-label>
+              <sg-input id="loss" type="number" value="14"></sg-input>
+            </div>
+          </div>
+
+          <sg-divider></sg-divider>
+
+          <div class="form-row" style="gap: var(--sg-space-sm)">
+            <sg-switch id="tracking">Single-axis tracking</sg-switch>
+            <sg-checkbox id="bifacial">Bifacial modules</sg-checkbox>
+            <sg-checkbox id="shading">Account for shading</sg-checkbox>
+          </div>
+
+          <div class="actions">
+            <sg-button id="calculate">Calculate yield</sg-button>
+            <sg-button id="advanced" variant="tonal">Advanced…</sg-button>
+            <sg-button id="reset" variant="ghost">Reset</sg-button>
+          </div>
+        </sg-card>
+
+        <!-- Results column -->
+        <div class="results">
+          <sg-progress id="progress" indeterminate style="display: none"></sg-progress>
+
+          <sg-card elevation="2">
+            <div slot="header" style="display: flex; justify-content: space-between; align-items: center">
+              <span>Annual yield</span>
+              <sg-badge variant="info" id="yield-badge">TMY 2024</sg-badge>
+            </div>
+            <div class="yield-figure">
+              <span class="value" id="yield-kwh">1,847</span>
+              <span class="unit">kWh/kWp</span>
+            </div>
+            <div class="stat-grid">
+              <div class="stat">
+                <span class="stat-label">Total annual</span>
+                <span class="stat-value" id="total-kwh">92.4 MWh</span>
+              </div>
+              <div class="stat">
+                <span class="stat-label">Performance ratio</span>
+                <span class="stat-value" id="pr">84.2%</span>
+              </div>
+              <div class="stat">
+                <span class="stat-label">Capacity factor</span>
+                <span class="stat-value" id="cf">21.1%</span>
+              </div>
+            </div>
+            <div slot="footer" style="display: flex; justify-content: space-between; align-items: center">
+              <span style="font-size: var(--sg-font-size-sm); color: var(--sg-color-on-surface-variant)">
+                Based on long-term meteorological data.
+              </span>
+              <sg-button size="sm" variant="ghost">Export report</sg-button>
+            </div>
+          </sg-card>
+
+          <sg-card>
+            <h3 slot="header">Monthly breakdown</h3>
+            <sg-tabs id="tabs">
+              <div slot="panel-0">
+                <div class="chart" id="chart"></div>
+                <div class="chart-axis">
+                  <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span>
+                  <span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span>
+                  <span>Nov</span><span>Dec</span>
+                </div>
+              </div>
+              <div slot="panel-1">
+                <p>Monthly performance ratio analysis would go here.</p>
+                <sg-alert variant="info">
+                  Performance ratio averages 84.2% across the year, with peak summer values reaching 87%.
+                </sg-alert>
+              </div>
+              <div slot="panel-2">
+                <p>Loss breakdown:</p>
+                <div style="display: flex; gap: var(--sg-space-xs); flex-wrap: wrap; margin-top: var(--sg-space-sm)">
+                  <sg-chip>Temperature: 4.2%</sg-chip>
+                  <sg-chip>Soiling: 2.1%</sg-chip>
+                  <sg-chip>Inverter: 2.0%</sg-chip>
+                  <sg-chip>Mismatch: 1.5%</sg-chip>
+                  <sg-chip>Wiring: 1.0%</sg-chip>
+                  <sg-chip>Shading: 0.8%</sg-chip>
+                  <sg-chip>Other: 2.4%</sg-chip>
+                </div>
+              </div>
+            </sg-tabs>
+          </sg-card>
+
+          <sg-accordion-item heading="What's included in this estimate?">
+            Yield estimates use long-term TMY (Typical Meteorological Year) data interpolated to your
+            site's coordinates. Module degradation, soiling, and downtime are accounted for via the
+            performance loss parameter. For bankable estimates, contact your Solargis representative.
+          </sg-accordion-item>
+        </div>
+      </div>
+    </div>
+
+    <!-- Advanced settings modal -->
+    <sg-modal id="modal">
+      <h3 slot="header">Advanced settings</h3>
+      <p style="margin: 0 0 var(--sg-space-md) 0; color: var(--sg-color-on-surface-variant)">
+        Fine-tune the simulation parameters below. Defaults are appropriate for most fixed-tilt
+        ground-mount and rooftop installations.
+      </p>
+      <div class="form-grid">
+        <div class="form-row">
+          <sg-label>Module type</sg-label>
+          <sg-select id="module-type"></sg-select>
+        </div>
+        <div class="form-row">
+          <sg-label>DC/AC ratio</sg-label>
+          <sg-input type="number" value="1.20"></sg-input>
+        </div>
+        <div class="form-row">
+          <sg-label>Albedo</sg-label>
+          <sg-input type="number" value="0.20"></sg-input>
+        </div>
+        <div class="form-row">
+          <sg-label>Annual degradation (%)</sg-label>
+          <sg-input type="number" value="0.5"></sg-input>
+        </div>
+      </div>
+      <div slot="footer">
+        <sg-button variant="ghost" id="modal-cancel">Cancel</sg-button>
+        <sg-button id="modal-apply">Apply</sg-button>
+      </div>
+    </sg-modal>
+
+    <footer>
+      Built with
+      <a href="./">DSC-mini</a> ·
+      <a href="https://github.com/jozefbenko/solargis-dsc-mini">source</a>
+    </footer>
+
+    <script type="module">
+      // Wire up data + interactions
+      const $ = (id) => document.getElementById(id);
+
+      $('location').options = [
+        { value: 'sk', label: 'Bratislava, Slovakia' },
+        { value: 'cz', label: 'Prague, Czech Republic' },
+        { value: 'at', label: 'Vienna, Austria' },
+        { value: 'de', label: 'Munich, Germany' },
+        { value: 'es', label: 'Madrid, Spain' },
+        { value: 'it', label: 'Rome, Italy' },
+      ];
+      $('location').value = 'sk';
+
+      $('module-type').options = [
+        { value: 'mono', label: 'Monocrystalline silicon' },
+        { value: 'poly', label: 'Polycrystalline silicon' },
+        { value: 'thin', label: 'Thin film' },
+      ];
+      $('module-type').value = 'mono';
+
+      $('tabs').tabs = ['Production', 'Performance', 'Losses'];
+
+      // Monthly data for the chart (kWh/kWp by month)
+      const baseMonthly = [62, 92, 156, 198, 234, 248, 256, 226, 175, 124, 70, 56];
+      const renderChart = (data) => {
+        const max = Math.max(...data);
+        $('chart').innerHTML = data
+          .map((v) => `<div class="bar" style="height: ${(v / max) * 100}%"></div>`)
+          .join('');
+      };
+      renderChart(baseMonthly);
+
+      // Calculate button — fake progress + recompute
+      $('calculate').addEventListener('click', async () => {
+        $('progress').style.display = 'block';
+        $('calculate').disabled = true;
+        await new Promise((r) => setTimeout(r, 700));
+
+        const size = parseFloat($('size').value) || 50;
+        const tilt = parseFloat($('tilt').value) || 35;
+        const loss = parseFloat($('loss').value) || 14;
+        const tracking = $('tracking').checked;
+        const bifacial = $('bifacial').checked;
+
+        const tiltFactor = 1 - Math.abs(tilt - 35) * 0.005;
+        const trackingBoost = tracking ? 1.2 : 1;
+        const bifacialBoost = bifacial ? 1.07 : 1;
+        const lossFactor = 1 - loss / 100;
+        const yieldKWh = Math.round(1900 * tiltFactor * trackingBoost * bifacialBoost * lossFactor);
+
+        $('yield-kwh').textContent = yieldKWh.toLocaleString();
+        $('total-kwh').textContent = `${((yieldKWh * size) / 1000).toFixed(1)} MWh`;
+        $('pr').textContent = `${(lossFactor * 100).toFixed(1)}%`;
+        $('cf').textContent = `${(yieldKWh / 8760 * 100).toFixed(1)}%`;
+
+        const monthMultiplier = (yieldKWh / 1900);
+        renderChart(baseMonthly.map((v) => v * monthMultiplier));
+
+        $('progress').style.display = 'none';
+        $('calculate').disabled = false;
+      });
+
+      $('reset').addEventListener('click', () => {
+        $('name').value = 'Bratislava rooftop';
+        $('size').value = '50';
+        $('tilt').value = '35';
+        $('azimuth').value = '180';
+        $('loss').value = '14';
+        $('tracking').checked = false;
+        $('bifacial').checked = false;
+        $('shading').checked = false;
+      });
+
+      // Modal wiring
+      $('advanced').addEventListener('click', () => ($('modal').open = true));
+      $('modal-cancel').addEventListener('click', () => ($('modal').open = false));
+      $('modal-apply').addEventListener('click', () => ($('modal').open = false));
+    </script>
+  </body>
+</html>
