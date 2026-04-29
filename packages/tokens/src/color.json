@@ -1,8 +1,8 @@
 {
   "color": {
-    "primary": { "value": "#de2121", "comment": "sg-red 50 — Solargis brand primary" },
-    "primary-hover": { "value": "#b11b1b", "comment": "sg-red 40" },
-    "primary-active": { "value": "#851414", "comment": "sg-red 30" },
+    "primary": { "value": "#e54d4d", "comment": "sg-red 60 — Solargis brand primary" },
+    "primary-hover": { "value": "#de2121", "comment": "sg-red 50" },
+    "primary-active": { "value": "#b11b1b", "comment": "sg-red 40" },
     "on-primary": { "value": "#ffffff" },
 
     "surface": { "value": "#ffffff", "comment": "sg-gray 100" },
