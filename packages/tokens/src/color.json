@@ -1,12 +1,25 @@
 {
   "color": {
     "primary": { "value": "#0066cc" },
+    "primary-hover": { "value": "#0052a3" },
+    "primary-active": { "value": "#003d7a" },
     "on-primary": { "value": "#ffffff" },
+
     "surface": { "value": "#ffffff" },
     "on-surface": { "value": "#1a1a1a" },
+    "surface-variant": { "value": "#f5f7fa" },
+    "on-surface-variant": { "value": "#5a6470" },
+
     "outline": { "value": "#cfd4da" },
+    "outline-variant": { "value": "#e4e7eb" },
+
     "error": { "value": "#d32f2f" },
+    "on-error": { "value": "#ffffff" },
     "warning": { "value": "#ed6c02" },
-    "success": { "value": "#2e7d32" }
+    "on-warning": { "value": "#ffffff" },
+    "success": { "value": "#2e7d32" },
+    "on-success": { "value": "#ffffff" },
+    "info": { "value": "#0288d1" },
+    "on-info": { "value": "#ffffff" }
   }
 }

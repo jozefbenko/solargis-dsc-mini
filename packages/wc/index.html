@@ -14,29 +14,43 @@
         background: var(--sg-color-surface);
         margin: 0;
         padding: var(--sg-space-2xl);
-        display: flex;
-        flex-direction: column;
-        gap: var(--sg-space-xl);
+        max-width: 960px;
       }
       h1 {
         font-size: var(--sg-font-size-xl);
         font-weight: var(--sg-font-weight-bold);
-        margin: 0;
+        margin: 0 0 var(--sg-space-2xl) 0;
       }
-      section {
-        display: flex;
-        flex-direction: column;
-        gap: var(--sg-space-md);
+      h2 {
+        font-size: var(--sg-font-size-lg);
+        font-weight: var(--sg-font-weight-medium);
+        margin: var(--sg-space-2xl) 0 var(--sg-space-md) 0;
+        color: var(--sg-color-on-surface);
+        border-bottom: 1px solid var(--sg-color-outline-variant);
+        padding-bottom: var(--sg-space-xs);
       }
       .row {
         display: flex;
         gap: var(--sg-space-md);
         align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: var(--sg-space-md);
+      }
+      .col {
+        display: flex;
+        flex-direction: column;
+        gap: var(--sg-space-md);
+        max-width: 400px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--sg-space-md);
       }
       .label {
         font-size: var(--sg-font-size-sm);
-        color: var(--sg-color-outline);
-        min-width: 120px;
+        color: var(--sg-color-on-surface-variant);
+        min-width: 100px;
       }
     </style>
     <script type="module" src="/src/index.ts"></script>
@@ -44,17 +58,169 @@
   <body>
     <h1>DSC-mini · WC playground</h1>
 
-    <section>
-      <div class="row">
-        <span class="label">solid (default)</span>
-        <sg-button>Click me</sg-button>
-        <sg-button disabled>Disabled</sg-button>
+    <h2>Buttons</h2>
+    <div class="row">
+      <span class="label">solid</span>
+      <sg-button size="sm">Small</sg-button>
+      <sg-button>Default</sg-button>
+      <sg-button size="lg">Large</sg-button>
+      <sg-button disabled>Disabled</sg-button>
+    </div>
+    <div class="row">
+      <span class="label">variants</span>
+      <sg-button variant="solid">Solid</sg-button>
+      <sg-button variant="outline">Outline</sg-button>
+      <sg-button variant="ghost">Ghost</sg-button>
+      <sg-button variant="danger">Danger</sg-button>
+    </div>
+
+    <h2>Form fields</h2>
+    <div class="col">
+      <div>
+        <sg-label required>Email</sg-label>
+        <sg-input type="email" placeholder="you@example.com"></sg-input>
       </div>
-      <div class="row">
-        <span class="label">ghost</span>
-        <sg-button variant="ghost">Click me</sg-button>
-        <sg-button variant="ghost" disabled>Disabled</sg-button>
+      <div>
+        <sg-label>Disabled</sg-label>
+        <sg-input value="locked" disabled></sg-input>
       </div>
-    </section>
+      <div>
+        <sg-label>Invalid</sg-label>
+        <sg-input value="bad@" invalid></sg-input>
+      </div>
+      <div>
+        <sg-label>Country</sg-label>
+        <sg-select id="select"></sg-select>
+      </div>
+    </div>
+
+    <h2>Choice controls</h2>
+    <div class="row">
+      <sg-checkbox checked>Accept terms</sg-checkbox>
+      <sg-checkbox>Subscribe</sg-checkbox>
+      <sg-checkbox disabled>Disabled</sg-checkbox>
+    </div>
+    <div class="row">
+      <sg-radio name="plan" value="free" checked>Free</sg-radio>
+      <sg-radio name="plan" value="pro">Pro</sg-radio>
+      <sg-radio name="plan" value="ent">Enterprise</sg-radio>
+    </div>
+    <div class="row">
+      <sg-switch checked>Notifications</sg-switch>
+      <sg-switch>Dark mode</sg-switch>
+      <sg-switch disabled>Disabled</sg-switch>
+    </div>
+
+    <h2>Status indicators</h2>
+    <div class="row">
+      <span class="label">badges</span>
+      <sg-badge>3</sg-badge>
+      <sg-badge variant="success">OK</sg-badge>
+      <sg-badge variant="warning">!</sg-badge>
+      <sg-badge variant="error">12</sg-badge>
+      <sg-badge variant="info">i</sg-badge>
+      <sg-badge variant="neutral">42</sg-badge>
+    </div>
+    <div class="row">
+      <span class="label">chips</span>
+      <sg-chip>Filter</sg-chip>
+      <sg-chip variant="primary">Active</sg-chip>
+      <sg-chip removable>Removable</sg-chip>
+    </div>
+    <div class="row">
+      <span class="label">spinners</span>
+      <sg-spinner size="sm"></sg-spinner>
+      <sg-spinner></sg-spinner>
+      <sg-spinner size="lg"></sg-spinner>
+    </div>
+
+    <h2>Progress</h2>
+    <div class="col">
+      <sg-progress value="33"></sg-progress>
+      <sg-progress value="66"></sg-progress>
+      <sg-progress value="100"></sg-progress>
+      <sg-progress indeterminate></sg-progress>
+    </div>
+
+    <h2>Alerts</h2>
+    <div class="col">
+      <sg-alert variant="info">Heads up — info message.</sg-alert>
+      <sg-alert variant="success">Saved successfully.</sg-alert>
+      <sg-alert variant="warning">Check your input.</sg-alert>
+      <sg-alert variant="error">Something went wrong.</sg-alert>
+    </div>
+
+    <h2>Cards</h2>
+    <div class="grid">
+      <sg-card>
+        <h3 slot="header">Solar yield</h3>
+        <p>1,234 kWh generated this month.</p>
+        <div slot="footer">
+          <sg-button size="sm" variant="ghost">View report</sg-button>
+        </div>
+      </sg-card>
+      <sg-card elevation="3">
+        <h3 slot="header">Site status</h3>
+        <p>All systems operational.</p>
+      </sg-card>
+    </div>
+
+    <h2>Divider</h2>
+    <p>Above</p>
+    <sg-divider></sg-divider>
+    <p>Below</p>
+
+    <h2>Tabs</h2>
+    <sg-tabs id="tabs">
+      <div slot="panel-0">Overview content goes here.</div>
+      <div slot="panel-1">Analytics content goes here.</div>
+      <div slot="panel-2">Settings content goes here.</div>
+    </sg-tabs>
+
+    <h2>Accordion</h2>
+    <div>
+      <sg-accordion-item heading="What is DSC-mini?" open>
+        A standalone slim version of the Solargis Design System for small projects and Claude artifacts.
+      </sg-accordion-item>
+      <sg-accordion-item heading="How is it different from DSC?">
+        Fewer override knobs, fewer components, opinionated defaults.
+      </sg-accordion-item>
+      <sg-accordion-item heading="Can I use it in React?">
+        Yes — via the shadcn theme package, or by importing the web components directly.
+      </sg-accordion-item>
+    </div>
+
+    <h2>Modal</h2>
+    <div class="row">
+      <sg-button id="open-modal">Open modal</sg-button>
+    </div>
+    <sg-modal id="modal">
+      <h3 slot="header">Confirm action</h3>
+      <p>Are you sure you want to delete this site? This cannot be undone.</p>
+      <div slot="footer">
+        <sg-button variant="ghost" id="cancel">Cancel</sg-button>
+        <sg-button variant="danger" id="confirm">Delete</sg-button>
+      </div>
+    </sg-modal>
+
+    <script type="module">
+      // Wire up demo state
+      const select = document.getElementById('select');
+      select.options = [
+        { value: 'sk', label: 'Slovakia' },
+        { value: 'cz', label: 'Czech Republic' },
+        { value: 'at', label: 'Austria' },
+        { value: 'de', label: 'Germany' },
+      ];
+      select.value = 'sk';
+
+      const tabs = document.getElementById('tabs');
+      tabs.tabs = ['Overview', 'Analytics', 'Settings'];
+
+      const modal = document.getElementById('modal');
+      document.getElementById('open-modal').addEventListener('click', () => (modal.open = true));
+      document.getElementById('cancel').addEventListener('click', () => (modal.open = false));
+      document.getElementById('confirm').addEventListener('click', () => (modal.open = false));
+    </script>
   </body>
 </html>
