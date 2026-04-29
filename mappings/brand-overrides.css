@@ -1,0 +1,157 @@
+/**
+ * DSC-mini brand layer for shadcn/ui.
+ *
+ * Inline this AFTER shadcn's base stylesheet. It re-points shadcn's CSS
+ * variables at DSC-mini tokens so any shadcn primitive (Button, Card, Alert,
+ * etc.) renders in Solargis brand colors with no component code change.
+ *
+ * Self-contained: includes the DSC token block inline. No external assets.
+ * Drop the whole file into a <style> tag in an artifact and you're done.
+ *
+ * --- DSC tokens ----------------------------------------------------------- */
+
+:root {
+  /* Color — brand */
+  --sg-color-primary: #de2121;            /* sg-red 50 */
+  --sg-color-primary-hover: #b11b1b;      /* sg-red 40 */
+  --sg-color-primary-active: #851414;     /* sg-red 30 */
+  --sg-color-on-primary: #ffffff;
+  --sg-color-primary-container: #f8d3d3;  /* sg-red 90 — tonal bg */
+  --sg-color-on-primary-container: #851414;
+
+  /* Color — surface */
+  --sg-color-surface: #ffffff;
+  --sg-color-on-surface: #424957;         /* sg-gray 30 */
+  --sg-color-surface-variant: #f3f4f6;    /* sg-gray 96 */
+  --sg-color-on-surface-variant: #576072; /* sg-gray 40 */
+  --sg-color-outline: #c9ccd2;            /* sg-gray 80 */
+  --sg-color-outline-variant: #e3e5e8;    /* sg-gray 90 */
+
+  /* Color — status */
+  --sg-color-error: #f75208;              /* sg-orange 50 (avoids brand clash) */
+  --sg-color-on-error: #ffffff;
+  --sg-color-warning: #ffa200;            /* sg-yellow 50 */
+  --sg-color-on-warning: #332100;
+  --sg-color-success: #467623;            /* sg-green 30 */
+  --sg-color-on-success: #ffffff;
+  --sg-color-info: #1066ef;               /* sg-electric 50 */
+  --sg-color-on-info: #ffffff;
+
+  /* Shape */
+  --sg-shape-sm: 2px;
+  --sg-shape-md: 6px;
+  --sg-shape-lg: 8px;
+  --sg-shape-round: 9999px;
+
+  /* Space */
+  --sg-space-xs: 4px;
+  --sg-space-sm: 8px;
+  --sg-space-md: 12px;
+  --sg-space-lg: 16px;
+  --sg-space-xl: 24px;
+  --sg-space-2xl: 32px;
+
+  /* Typography */
+  --sg-font-family-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --sg-font-size-xs: 12px;
+  --sg-font-size-sm: 13px;
+  --sg-font-size-md: 14px;
+  --sg-font-size-lg: 16px;
+  --sg-font-size-xl: 20px;
+
+  /* Elevation — DSC values */
+  --sg-elevation-1: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 2px 0 0 rgba(0, 0, 0, 0.05);
+  --sg-elevation-2: 0 -1px 1px -1px rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+}
+
+/* --- shadcn variable remap -------------------------------------------------
+ *
+ * shadcn ships with neutral oklch() defaults. We override them so every
+ * primitive picks up DSC tokens via the cascade. Hex is fine here — Tailwind
+ * v4's @theme accepts whatever color() the var resolves to.
+ *
+ * If shadcn ships a token we don't model in DSC (chart-1..5, sidebar-*),
+ * we leave it at the shadcn default — those are app-author concerns.
+ */
+
+:root {
+  /* Surfaces */
+  --background: var(--sg-color-surface);
+  --foreground: var(--sg-color-on-surface);
+  --card: var(--sg-color-surface);
+  --card-foreground: var(--sg-color-on-surface);
+  --popover: var(--sg-color-surface);
+  --popover-foreground: var(--sg-color-on-surface);
+
+  /* Brand → primary */
+  --primary: var(--sg-color-primary);
+  --primary-foreground: var(--sg-color-on-primary);
+
+  /* Tonal → secondary (DSC's primary-container slot) */
+  --secondary: var(--sg-color-primary-container);
+  --secondary-foreground: var(--sg-color-on-primary-container);
+
+  /* Muted = neutral surface variant */
+  --muted: var(--sg-color-surface-variant);
+  --muted-foreground: var(--sg-color-on-surface-variant);
+
+  /* Accent — reuse muted; DSC has no separate accent role */
+  --accent: var(--sg-color-surface-variant);
+  --accent-foreground: var(--sg-color-on-surface);
+
+  /* Destructive → DSC error (sg-orange) */
+  --destructive: var(--sg-color-error);
+  --destructive-foreground: var(--sg-color-on-error);
+
+  /* Borders + focus ring */
+  --border: var(--sg-color-outline);
+  --input: var(--sg-color-outline);
+  --ring: var(--sg-color-primary);
+
+  /* Radius — shadcn uses --radius as a base; DSC default control radius is 6px */
+  --radius: var(--sg-shape-md);
+}
+
+/* --- Status color extensions for non-shadcn variants -----------------------
+ *
+ * shadcn ships destructive only. DSC alerts/badges need success/warning/info.
+ * Add utility classes consumers can apply via className. The mapping doc
+ * tells Claude exactly when to reach for these.
+ */
+
+.sg-status-success {
+  --status-bg: color-mix(in srgb, var(--sg-color-success) 12%, transparent);
+  --status-fg: var(--sg-color-success);
+  --status-border: color-mix(in srgb, var(--sg-color-success) 30%, transparent);
+}
+.sg-status-warning {
+  --status-bg: color-mix(in srgb, var(--sg-color-warning) 18%, transparent);
+  --status-fg: var(--sg-color-on-warning);
+  --status-border: color-mix(in srgb, var(--sg-color-warning) 50%, transparent);
+}
+.sg-status-info {
+  --status-bg: color-mix(in srgb, var(--sg-color-info) 12%, transparent);
+  --status-fg: var(--sg-color-info);
+  --status-border: color-mix(in srgb, var(--sg-color-info) 30%, transparent);
+}
+
+.sg-status-success,
+.sg-status-warning,
+.sg-status-info {
+  background: var(--status-bg);
+  color: var(--status-fg);
+  border-color: var(--status-border);
+}
+
+/* --- Body defaults ---------------------------------------------------------
+ *
+ * shadcn doesn't enforce a body font. DSC does — IBM Plex Sans, 14px.
+ * The artifact preamble handles the @font-face/<link rel> separately.
+ */
+
+html, body {
+  font-family: var(--sg-font-family-sans);
+  font-size: var(--sg-font-size-md);
+  color: var(--sg-color-on-surface);
+  background: var(--sg-color-surface);
+}
