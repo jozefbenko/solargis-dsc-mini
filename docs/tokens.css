@@ -1,0 +1,61 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --sg-color-primary: #de2121; /** sg-red 50 — Solargis brand primary */
+  --sg-color-primary-hover: #b11b1b; /** sg-red 40 */
+  --sg-color-primary-active: #851414; /** sg-red 30 */
+  --sg-color-on-primary: #ffffff;
+  --sg-color-primary-container: #f8d3d3; /** sg-red 90 — tonal bg */
+  --sg-color-primary-container-hover: #f2a6a6; /** sg-red 80 */
+  --sg-color-on-primary-container: #851414; /** sg-red 30 — text on tonal */
+  --sg-color-surface: #ffffff; /** sg-gray 100 */
+  --sg-color-on-surface: #424957; /** sg-gray 30 — body text */
+  --sg-color-surface-variant: #f3f4f6; /** sg-gray 96 — subtle bg */
+  --sg-color-on-surface-variant: #576072; /** sg-gray 40 — secondary text */
+  --sg-color-outline: #c9ccd2; /** sg-gray 80 — borders */
+  --sg-color-outline-variant: #e3e5e8; /** sg-gray 90 — dividers */
+  --sg-color-error: #f75208; /** sg-orange 50 — DSC palette error role (avoids clash with brand red) */
+  --sg-color-on-error: #ffffff;
+  --sg-color-warning: #ffa200; /** sg-yellow 50 */
+  --sg-color-on-warning: #332100; /** sg-yellow 10 — dark text required on amber */
+  --sg-color-success: #467623; /** sg-green 30 — darkened for white-text contrast */
+  --sg-color-on-success: #ffffff;
+  --sg-color-info: #1066ef; /** sg-electric 50 */
+  --sg-color-on-info: #ffffff;
+  --sg-elevation-0: none;
+  --sg-elevation-1: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 2px 0 0 rgba(0, 0, 0, 0.05); /** DSC elevation-level1 */
+  --sg-elevation-2: 0 -1px 1px -1px rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.08); /** DSC elevation-level2 */
+  --sg-elevation-3: 0 10px 15px rgba(0, 0, 0, 0.07), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --sg-elevation-4: 0 20px 25px rgba(0, 0, 0, 0.10), 0 10px 10px rgba(0, 0, 0, 0.04);
+  --sg-duration-fast: 120ms;
+  --sg-duration-normal: 200ms;
+  --sg-duration-slow: 320ms;
+  --sg-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --sg-shape-sm: 2px; /** DSC: shape-xs */
+  --sg-shape-md: 6px; /** DSC: shape-m — default control radius */
+  --sg-shape-lg: 8px; /** DSC: shape-l — cards */
+  --sg-shape-round: 9999px; /** DSC: shape-full — pills */
+  --sg-space-xs: 4px;
+  --sg-space-sm: 8px;
+  --sg-space-md: 12px;
+  --sg-space-lg: 16px;
+  --sg-space-xl: 24px;
+  --sg-space-2xl: 32px;
+  --sg-font-family-sans: 'IBM Plex Sans', system-ui, sans-serif; /** DSC brand font */
+  --sg-font-family-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --sg-font-size-xs: 12px;
+  --sg-font-size-sm: 13px;
+  --sg-font-size-md: 14px; /** DSC base font size */
+  --sg-font-size-lg: 16px;
+  --sg-font-size-xl: 20px;
+  --sg-font-weight-regular: 400;
+  --sg-font-weight-medium: 500;
+  --sg-font-weight-bold: 700;
+  --sg-z-dropdown: 1000;
+  --sg-z-sticky: 1100;
+  --sg-z-overlay: 1200;
+  --sg-z-modal: 1300;
+  --sg-z-toast: 1400;
+}

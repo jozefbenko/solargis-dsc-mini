@@ -41,14 +41,8 @@ Every Solargis HTML artifact starts with:
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&display=swap"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/jozefbenko/solargis-dsc-mini@main/docs/tokens.css"
-    />
-    <script
-      type="module"
-      src="https://cdn.jsdelivr.net/gh/jozefbenko/solargis-dsc-mini@main/docs/wc.js"
-    ></script>
+    <link rel="stylesheet" href="{{TOKENS_CSS_URL}}" />
+    <script type="module" src="{{WC_BUNDLE_URL}}"></script>
     <style>
       body {
         font-family: 'IBM Plex Sans', system-ui, sans-serif;
@@ -66,17 +60,7 @@ Every Solargis HTML artifact starts with:
 </html>
 ```
 
-**Always use jsDelivr** for the tokens and WC bundle — it's allowed by the Claude artifact CSP, unlike GitHub Pages (`*.github.io`). The `@main` ref always points at the latest commit; jsDelivr caches for ~12h.
-
-### Brand assets
-
-Solargis logos and other hosted images live under the same CDN:
-
-```
-https://cdn.jsdelivr.net/gh/jozefbenko/solargis-dsc-mini@main/docs/assets/<filename>
-```
-
-Available files: `logo-placeholder.svg`, `wordmark-placeholder.svg`. When you need a logo for the artifact (header, footer, branding), use these URLs in `<img src="…">`.
+The MCP substitutes `{{TOKENS_CSS_URL}}` and `{{WC_BUNDLE_URL}}` at injection time.
 
 ### Component catalog
 

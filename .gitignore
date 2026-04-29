@@ -5,10 +5,9 @@ dist/
 coverage/
 tmp/
 
-# docs/ holds the GH Pages build. index.html is committed; built artifacts are not.
-docs/tokens.css
-docs/wc.js
-docs/prompts/
+# docs/ is the published artifact directory. Everything in it is committed
+# so jsDelivr can serve from the git tree (jsDelivr serves git, not Pages).
+# Run `bun run build:docs` before pushing to keep the bundles current.
 
 .DS_Store
 *.log

@@ -7,11 +7,13 @@ Design essentials as a standalone package for small projects — and a determini
 ## Use it in a Claude HTML artifact
 
 ```html
-<link rel="stylesheet" href="https://jozefbenko.github.io/solargis-dsc-mini/tokens.css">
-<script type="module" src="https://jozefbenko.github.io/solargis-dsc-mini/wc.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jozefbenko/solargis-dsc-mini@main/docs/tokens.css">
+<script type="module" src="https://cdn.jsdelivr.net/gh/jozefbenko/solargis-dsc-mini@main/docs/wc.js"></script>
 ```
 
-The MCP injects [`prompts/artifact-claude.md`](./prompts/artifact-claude.md) (also published at [the deployed URL](https://jozefbenko.github.io/solargis-dsc-mini/prompts/artifact-claude.md)) as the system prompt for Claude artifact rendering.
+**Always jsDelivr** — Claude's artifact CSP blocks `*.github.io`. Same code, allowed origin.
+
+The MCP injects [`prompts/artifact-claude.md`](./prompts/artifact-claude.md) as the system prompt for Claude artifact rendering. Brand assets live under [`docs/assets/`](./docs/assets/) and are served from the same jsDelivr URL prefix.
 
 ## Why
 

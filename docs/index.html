@@ -116,9 +116,14 @@
 
       <h2>Use it in a Claude HTML artifact</h2>
       <p>Two lines and you've got brand-aligned components and tokens:</p>
-      <pre>&lt;link rel="stylesheet" href="https://jozefbenko.github.io/solargis-dsc-mini/tokens.css"&gt;
-&lt;script type="module" src="https://jozefbenko.github.io/solargis-dsc-mini/wc.js"&gt;&lt;/script&gt;</pre>
+      <pre>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jozefbenko/solargis-dsc-mini@main/docs/tokens.css"&gt;
+&lt;script type="module" src="https://cdn.jsdelivr.net/gh/jozefbenko/solargis-dsc-mini@main/docs/wc.js"&gt;&lt;/script&gt;</pre>
 
+      <p>
+        Use jsDelivr — Claude's artifact CSP blocks <code>*.github.io</code>. Same code, allowed
+        origin. Hosted brand assets (logos) live under
+        <code>cdn.jsdelivr.net/gh/jozefbenko/solargis-dsc-mini@main/docs/assets/</code>.
+      </p>
       <p>
         Then use any <code>&lt;sg-*&gt;</code> tag below. See a full composition in the
         <a href="./example.html">PV site yield estimator example</a>. The MCP injects
