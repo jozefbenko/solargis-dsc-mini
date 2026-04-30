@@ -1,0 +1,1810 @@
+# DSC component manifest
+# Source of truth: ~/dev/sg/solargis2-dsc (libs/design-system-components, libs/ui-shared, libs/ng-shared, libs/business-shared)
+# Consumer: proto-bench renderer registry (~/dev/sg/proto-bench-spike)
+# Generator: solargis2-dsc/scripts/build-manifest.mjs (lifted from /tmp/dsc-manifest)
+# Tracker: CC-5 (DSC manifest)
+
+version: 0.1.0
+generated_at: 2026-04-30T14:44:00.123Z
+source_repo: solargis2-dsc
+source_commit: f78bdab3917c6e74a5d1e1745f7ff18337d7fa3f
+
+# Categories used by proto-bench renderer:
+#   chrome        — app shell / header / nav / sidenav
+#   layout        — page scaffolds, grids, layout containers
+#   data-display  — tables, cards, badges, empty states, markers
+#   input         — form controls (range, color, file, search, etc.)
+#   feedback      — alerts, dialogs, overlays, snackbars
+#   navigation    — menus, filters, dropdowns
+#   buttons       — button-shaped primitives (mega, meta, split)
+#   charts        — Highcharts wrappers and chart-domain helpers
+#   utility       — portal, helpers, decorative
+#   table-presets — sg-table preset directives ([sgEntityTable], etc)
+#
+# Field reference:
+#   kind          — tag | attribute-directive | material-restyle
+#   render        — "custom" when no clean shadcn equivalent (proto-bench wires manually)
+#   shadcn_equivalent — present when a shadcn primitive maps cleanly
+#   slots         — content-projection slot names; 'default' = unnamed <ng-content>
+#   props         — component @Input / input() declarations
+#   outputs       — component @Output / output() declarations
+
+components:
+  - name: "sg-app"
+    category: chrome
+    kind: tag
+    file: "libs/ng-shared/src/lib/core/containers/app.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: Root app shell container. Wires header + sidenav + outlet.
+  - name: "sg-header"
+    category: chrome
+    kind: tag
+    file: "libs/ng-shared/src/lib/core/components/header/header.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: tabPanel
+        type: MatTabNavPanel
+    outputs: []
+    notes: "Top app bar. Hosts logo, app menu, account menu, settings menu."
+  - name: "sg-app-header-logo"
+    category: chrome
+    kind: tag
+    file: "libs/ng-shared/src/lib/core/components/header/app-header-logo/app-header-logo.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: app
+        type: FrontendSolargisApp
+        required: true
+    outputs: []
+    notes: "Branded logo cluster used inside sg-header."
+  - name: "sg-app-menu"
+    category: chrome
+    kind: tag
+    file: "libs/ng-shared/src/lib/core/components/header/app-menu/app-menu.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "App switcher dropdown inside sg-header."
+  - name: "sg-account-menu"
+    category: chrome
+    kind: tag
+    file: "libs/ng-shared/src/lib/core/components/header/account-menu/account-menu.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: user
+        type: User
+      - name: selectedCompany
+        type: Company
+      - name: hideOnSmallScreen
+        type: boolean
+      - name: companies
+        type: "Company[]"
+      - name: isCompanyAdmin
+        type: boolean
+    outputs: []
+    notes: "Signed-in user / company menu."
+  - name: "sg-mobile-menu"
+    category: chrome
+    kind: tag
+    file: "libs/ng-shared/src/lib/core/components/mobile-menu/mobile-menu.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: active
+        type: boolean
+    outputs:
+      - name: closeMobileMenu
+        type: void
+    notes: "Mobile-only nav drawer trigger."
+  - name: "sg-side-navigation"
+    category: chrome
+    kind: tag
+    file: "libs/ng-shared/src/lib/side-navigation/components/side-navigation/side-navigation.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: path
+        type: string
+      - name: routes
+        type: "SideNavigationRoute[]"
+      - name: allowedPaths
+    outputs:
+      - name: onSelect
+        type: void
+    notes: Left rail navigation host.
+  - name: "sg-side-navigation-item"
+    category: chrome
+    kind: tag
+    file: "libs/ng-shared/src/lib/side-navigation/components/side-navigation-item/side-navigation-item.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: route
+        type: SideNavigationRoute
+      - name: locked
+        type: boolean
+      - name: active
+        type: boolean
+      - name: expanded
+        type: boolean
+      - name: child
+        type: boolean
+      - name: hasChildren
+        type: boolean
+    outputs:
+      - name: onClick
+        type: void
+      - name: openLockerModal
+        type: void
+      - name: onClickArrow
+        type: void
+    notes: Single rail entry. Icon + label + active state.
+  - name: "sg-settings-menu"
+    category: chrome
+    kind: tag
+    file: "libs/ng-shared/src/lib/shared/components/settings-menu/settings-menu.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: componentName
+        type: "'map' | 'list' | 'detail'"
+    outputs:
+      - name: openSystemSettings
+        type: void
+      - name: openLayerSettings
+        type: void
+      - name: openUnitSettings
+        type: void
+    notes: "User-preferences popover (units, timezone, language)."
+  - name: "sg-full-page-layout"
+    category: layout
+    kind: tag
+    file: "libs/design-system-components/src/lib/layout/full-page-layout/full-page-layout.component.ts"
+    render: custom
+    slots: ["sg-full-page-layout-toolbar-content", "sg-full-page-layout-actions", "mat-tab-group", "sg-simple-layout, sg-sidenav-layout"]
+    props:
+      - name: pageBarText
+        type: string
+      - name: toolbarText
+        type: string
+      - name: toolbarBadge
+        type: ToolbarBadge
+      - name: navigateBackIcon
+        type: string
+    outputs:
+      - name: navigateBack
+        type: void
+    notes: "Full-page scaffold with toolbar + actions slots and content body."
+  - name: "sg-full-page-layout-toolbar-content"
+    category: layout
+    kind: tag
+    file: "libs/design-system-components/src/lib/layout/full-page-layout/toolbar-content/full-page-toolbar-content.component.ts"
+    render: custom
+    slots: [default]
+    props: []
+    outputs: []
+    notes: "Slot component for sg-full-page-layout toolbar."
+  - name: "sg-full-page-layout-actions"
+    category: layout
+    kind: tag
+    file: "libs/design-system-components/src/lib/layout/full-page-layout/actions/full-page-layout-actions.component.ts"
+    render: custom
+    slots: [default]
+    props: []
+    outputs: []
+    notes: "Slot component for sg-full-page-layout right-aligned actions."
+  - name: "sg-sidenav-layout"
+    category: layout
+    kind: tag
+    file: "libs/design-system-components/src/lib/layout/sidenav-layout/sidenav-layout.component.ts"
+    render: custom
+    slots: ["[sg-layout-toolbar], sg-layout-toolbar", "sg-alert-bar", "sg-left-sidenav-content, [sg-left-sidenav-content]", "sg-layout-content, router-outlet", "sg-right-sidenav-content"]
+    props: []
+    outputs:
+      - name: leftSidenavOpenedChange
+        type: boolean
+    notes: "Two-column layout with optional left + right sidenavs."
+  - name: "sg-left-sidenav-content"
+    category: layout
+    kind: tag
+    file: "libs/design-system-components/src/lib/layout/sidenav-layout/left-sidenav-content/left-sidenav-content.component.ts"
+    render: custom
+    slots: [default]
+    props:
+      - name: density
+        type: Density
+    outputs: []
+    notes: "Slot for sg-sidenav-layout left rail content."
+  - name: "sg-right-sidenav-content"
+    category: layout
+    kind: tag
+    file: "libs/design-system-components/src/lib/layout/sidenav-layout/right-sidenav-content/right-sidenav-content.component.ts"
+    render: custom
+    slots: [default]
+    props:
+      - name: closeButtonExists
+        default: "false"
+      - name: title
+        type: string
+    outputs:
+      - name: closePanel
+        type: void
+    notes: "Slot for sg-sidenav-layout right rail content."
+  - name: "sg-simple-layout"
+    category: layout
+    kind: tag
+    file: "libs/design-system-components/src/lib/layout/simple-layout/simple-layout.component.ts"
+    render: custom
+    slots: ["[sg-layout-toolbar], sg-layout-toolbar", "sg-alert-bar", "sg-layout-content, router-outlet"]
+    props: []
+    outputs: []
+    notes: "Centered single-column scaffold."
+  - name: "sg-layout-content"
+    category: layout
+    kind: tag
+    file: "libs/design-system-components/src/lib/layout/content/layout-content.component.ts"
+    render: custom
+    slots: ["sg-alert-bar", "sg-layout-full-width-container", "sg-layout-grid, sg-layout-masonry-grid, mat-tab-group", "router-outlet"]
+    props:
+      - name: title
+        type: string
+    outputs: []
+    notes: "Page content wrapper with consistent padding/max-width."
+  - name: "sg-layout-grid"
+    category: layout
+    kind: tag
+    file: "libs/design-system-components/src/lib/layout/content/grid/layout-grid.component.ts"
+    render: custom
+    slots: [default]
+    props: []
+    outputs: []
+    notes: "12-col responsive grid."
+  - name: "sg-layout-masonry-grid"
+    category: layout
+    kind: tag
+    file: "libs/design-system-components/src/lib/layout/content/grid/masonry-grid/layout-masonry-grid.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Masonry variant of layout-grid."
+  - name: "sg-layout-full-width-container"
+    category: layout
+    kind: tag
+    file: "libs/design-system-components/src/lib/layout/content/full-width-container/layout-full-width-container.component.ts"
+    render: custom
+    slots: [default, aside]
+    props:
+      - name: articleDensity
+        type: Density
+    outputs: []
+    notes: Breakout container that escapes layout padding.
+  - name: "sg-section"
+    category: layout
+    kind: tag
+    file: "libs/design-system-components/src/lib/section/section.component.ts"
+    shadcn_equivalent: card
+    slots: [default]
+    props:
+      - name: headerText
+        type: string
+      - name: contentClassName
+        type: string
+    outputs: []
+    notes: "Titled section block. Looser than sg-card; closer to a labelled fieldset."
+  - name: "[sg-layout-grid-cell]"
+    category: layout
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/layout/content/grid/cell/layout-grid-cell.directive.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Grid cell modifier inside sg-layout-grid (sets col-span / row-span)."
+  - name: "[sgLayoutMasonryGridCell]"
+    category: layout
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/layout/content/grid/masonry-grid/cell/layout-masonry-grid-cell.directive.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Masonry-grid cell modifier inside sg-layout-masonry-grid."
+  - name: "[sgChartGrid]"
+    category: layout
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/chart-grid/chart-grid.directive.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Chart-grid responsive layout host."
+  - name: "aside[sg-layout-aside]"
+    category: layout
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/layout/content/full-width-container/aside/layout-aside.directive.ts"
+    render: custom
+    slots: []
+    props:
+      - name: size
+        type: "'small' | 'medium'"
+        default: "'medium'"
+    outputs: []
+    notes: Aside (right rail) inside layout content.
+  - name: "sg-layout-toolbar"
+    category: layout
+    kind: tag
+    file: "libs/design-system-components/src/lib/layout/toolbar/layout-toolbar.directive.ts"
+    raw_selector: "sg-layout-toolbar, [sg-layout-toolbar]"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Page-toolbar primitive. Has dual selector form: tag and [sg-layout-toolbar] attribute."
+  - name: "[sgSidenavFlexContent]"
+    category: layout
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/layout/sidenav-layout/sidenav-flex-content.directive.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Flex-fill marker for sidenav content."
+  - name: "sg-table"
+    category: data-display
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/table.component.ts"
+    raw_selector: "sg-table:not([datasource])"
+    shadcn_equivalent: data-table
+    slots: []
+    props: []
+    outputs:
+      - name: selectedRowsChange
+        type: "string[]"
+    notes: "ag-grid wrapper. Two selectors: tag form (sg-table) and tag+datasource form. Authoritative interactive table."
+  - name: "sg-datatable"
+    category: data-display
+    kind: tag
+    file: "libs/design-system-components/src/lib/datatable/datatable.component.ts"
+    shadcn_equivalent: table
+    slots: [caption]
+    props: []
+    outputs: []
+    notes: "Simple HTML table for static datasets. No virtualization, no sort, no filter."
+  - name: "sg-message-card"
+    category: data-display
+    kind: tag
+    file: "libs/design-system-components/src/lib/card/message-card/message-card.component.ts"
+    shadcn_equivalent: alert
+    slots: ["mat-card-header", "mat-card-content"]
+    props: []
+    outputs: []
+    notes: Card with prominent message + icon. Used for inline tips/upsells.
+  - name: "sg-inline-badge"
+    category: data-display
+    kind: tag
+    file: "libs/design-system-components/src/lib/inline-badge/inline-badge.component.ts"
+    shadcn_equivalent: badge
+    slots: []
+    props:
+      - name: text
+        type: string
+      - name: color
+        type: InlineBadgePalette
+        default: "'accent'"
+      - name: badgeMode
+        type: BadgeMode
+        default: "'negative'"
+    outputs: []
+    notes: "Status pill. Color-coded via sg-color-status-* tokens."
+  - name: "sg-empty-state"
+    category: data-display
+    kind: tag
+    file: "libs/design-system-components/src/lib/empty-state/empty-state.component.ts"
+    shadcn_equivalent: empty-state
+    slots: [default, "sg-action-buttons"]
+    props:
+      - name: severity
+        type: SgEmptyStateSeverity
+        default: "'default'"
+      - name: title
+        type: string
+      - name: iconShown
+        default: "true"
+      - name: icon
+        type: string
+      - name: loading
+        default: "false"
+    outputs: []
+    notes: Loading / empty / error state for data views. Icon + title + description + slotted action.
+  - name: "sg-quantity"
+    category: data-display
+    kind: tag
+    file: "libs/design-system-components/src/lib/quantity/quantity.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: title
+        type: QuantityTitle
+      - name: subTitle
+        type: QuantityTitle
+      - name: unitHtml
+        type: string
+      - name: value
+        type: "number | string"
+    outputs: []
+    notes: Number + unit display. Used in metric tiles and report values.
+  - name: "sg-prefixed-text"
+    category: data-display
+    kind: tag
+    file: "libs/design-system-components/src/lib/prefixed-text/prefixed-text.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: icon
+        type: string
+      - name: svgIcon
+        type: string
+      - name: sgColor
+        type: SgColor
+      - name: iconTooltip
+        type: string
+      - name: text
+        type: string
+      - name: size
+        default: "18"
+    outputs: []
+    notes: "Label-prefix + value text pattern."
+  - name: "sg-paginator"
+    category: data-display
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/paginator/paginator.component.ts"
+    shadcn_equivalent: pagination
+    slots: []
+    props:
+      - name: length
+        type: number
+      - name: pageSize
+        type: number
+      - name: pageIndex
+        type: number
+      - name: pageSizeOptions
+        type: "number[]"
+    outputs:
+      - name: paginationChange
+        type: PageEvent
+    notes: "Material paginator wrapper used by sg-table."
+  - name: "sg-tree-divider"
+    category: data-display
+    kind: tag
+    file: "libs/design-system-components/src/lib/tree/tree-list/tree-divider/tree-divider.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: textOverflowMode
+        type: TextOverflowMode
+        default: TextOverflowMode.ellipsis
+      - name: config
+        type: TreeDividerConfig
+    outputs: []
+    notes: "Divider node inside sg-tree."
+  - name: "sg-standard-tree-node-content"
+    category: data-display
+    kind: tag
+    file: "libs/design-system-components/src/lib/tree/tree-node/standard-tree-node-content/standard-tree-node-content.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: textOverflowMode
+        type: TextOverflowMode
+        default: TextOverflowMode.ellipsis
+      - name: config
+        type: "StandardTreeNodeContentConfig<T>"
+    outputs: []
+    notes: "Default node renderer for sg-tree (icon + label + actions)."
+  - name: "sg-standard-tree-node-content-actions"
+    category: data-display
+    kind: tag
+    file: "libs/design-system-components/src/lib/tree/tree-node/standard-tree-node-content/actions/standard-tree-node-content-actions.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: actions
+        type: "StandardTreeNodeContentAction[]"
+      - name: menuConfig
+        type: "StandardTreeNodeContentConfig['actionsMenuConfig']"
+    outputs: []
+    notes: "Trailing actions slot for sg-standard-tree-node-content."
+  - name: "sg-icon-marker"
+    category: data-display
+    kind: tag
+    file: "libs/design-system-components/src/lib/marker/icon-marker/icon-marker.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: icon
+        type: string
+    outputs: []
+    notes: "Map marker variant: icon glyph."
+  - name: "sg-text-marker"
+    category: data-display
+    kind: tag
+    file: "libs/design-system-components/src/lib/marker/text-marker/text-marker.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: text
+        type: string
+      - name: caretHidden
+        default: "false"
+    outputs: []
+    notes: "Map marker variant: text label."
+  - name: "sg-highlighted-box"
+    category: data-display
+    kind: tag
+    file: "libs/design-system-components/src/lib/highlighted-box/highlighted-box.component.ts"
+    shadcn_equivalent: alert
+    slots: [default]
+    props:
+      - name: status
+        type: HighlightedBoxStatus
+        default: undefined
+      - name: title
+        type: string
+      - name: icon
+        type: string
+      - name: iconShown
+        default: "false"
+    outputs: []
+    notes: "Colored callout box for emphasis. Often paired with sg-action-buttons."
+  - name: "sg-action-buttons"
+    category: data-display
+    kind: tag
+    file: "libs/design-system-components/src/lib/highlighted-box/action-buttons/action-buttons.component.ts"
+    render: custom
+    slots: [default]
+    props: []
+    outputs: []
+    notes: "Inline button cluster slot, typically inside sg-highlighted-box / sg-message-card."
+  - name: "sg-horizontal-ul"
+    category: data-display
+    kind: tag
+    file: "libs/design-system-components/src/lib/horizontal-ul-creator/horizontal-ul.component.ts"
+    render: custom
+    slots: [default]
+    props: []
+    outputs: []
+    notes: "Inline-list helper that lays out <li> in a row with separators."
+  - name: "mat-icon"
+    category: data-display
+    kind: material-restyle
+    file: "libs/design-system-components/src/lib/icon/icon.directive.ts"
+    shadcn_equivalent: icon
+    slots: []
+    props: []
+    outputs: []
+    notes: "Material icon glyph, restyled with sg sizes/tokens. Pass icon name as text content."
+  - name: "mat-divider"
+    category: data-display
+    kind: material-restyle
+    file: "libs/design-system-components/src/lib/divider/divider.directive.ts"
+    shadcn_equivalent: separator
+    slots: []
+    props: []
+    outputs: []
+    notes: "Horizontal/vertical divider. `vertical` input toggles orientation."
+  - name: "mat-accordion"
+    category: data-display
+    kind: material-restyle
+    file: "libs/design-system-components/src/lib/expansion-panel/accordion/accordion.directive.ts"
+    shadcn_equivalent: accordion
+    slots: []
+    props: []
+    outputs: []
+    notes: "Expansion-panel group. Children are <mat-expansion-panel>."
+  - name: "mat-tree"
+    category: data-display
+    kind: material-restyle
+    file: "libs/design-system-components/src/lib/tree/tree.directive.ts"
+    raw_selector: "mat-tree:not([treeControl])"
+    shadcn_equivalent: tree
+    slots: []
+    props: []
+    outputs: []
+    notes: Hierarchical tree view. DSC variant restyles indentation + node connectors.
+  - name: "[sgHeatmap]"
+    category: data-display
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/heatmap/heatmap.directive.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Calendar/cell-based heatmap. Apply to a host element with `[sgHeatmap]=\"data\"`."
+  - name: "[sgTreeList]"
+    category: data-display
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/tree/tree-list/tree-list.directive.ts"
+    raw_selector: "[sgTreeList], sg-tree-list"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Flat tree list (not Material). Dual selector: [sgTreeList] and sg-tree-list tag."
+  - name: "div[sgMathExpression]"
+    category: data-display
+    kind: attribute-directive
+    file: "libs/ui-shared/src/lib/math-expression/math-expression.directive.ts"
+    raw_selector: "div[sgMathExpression], span[sgMathExpression]"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: Renders KaTeX math from a string input. Apply on div/span.
+  - name: "sg-checkbox-group"
+    category: input
+    kind: tag
+    file: "libs/design-system-components/src/lib/checkbox-group/checkbox-group.component.ts"
+    shadcn_equivalent: checkbox-group
+    slots: [default]
+    props:
+      - name: id
+        type: string
+        required: true
+      - name: text
+        type: string
+        required: true
+    outputs: []
+    notes: "Multi-checkbox input bound to a single FormControl."
+  - name: "sg-color-picker"
+    category: input
+    kind: tag
+    file: "libs/design-system-components/src/lib/color-picker/color-picker.component.ts"
+    shadcn_equivalent: color-picker
+    slots: []
+    props:
+      - name: okLabel
+        type: string
+        required: true
+      - name: color
+        type: string
+        required: true
+    outputs:
+      - name: cancelClick
+        type: void
+      - name: okClick
+        type: string
+      - name: colorChange
+        type: string
+    notes: Swatch + hex picker.
+  - name: "sg-radio-card"
+    category: input
+    kind: tag
+    file: "libs/design-system-components/src/lib/radio-card/radio-card.component.ts"
+    shadcn_equivalent: radio-card
+    slots: [default]
+    props:
+      - name: id
+        type: string
+        default: "`radio-${uniqueId()}`"
+      - name: value
+        type: T
+        required: true
+      - name: title
+        type: string
+        default: undefined
+      - name: subtitle
+        type: string
+        default: undefined
+      - name: useCustomTemplate
+        type: boolean
+        default: "false"
+      - name: badge
+        type: string
+        default: undefined
+      - name: disabled
+        type: boolean
+        default: "false"
+      - name: horizontal
+        type: boolean
+        default: "false"
+      - name: radioButtonRight
+        type: boolean
+        default: "false"
+      - name: hideRadioButton
+        type: boolean
+        default: "false"
+    outputs: []
+    notes: Selectable card variant of radio. Visual selection with title/description/icon.
+  - name: "sg-toggle-card"
+    category: input
+    kind: tag
+    file: "libs/design-system-components/src/lib/toggle-card/toggle-card.component.ts"
+    shadcn_equivalent: toggle-card
+    slots: [".primary-content", ".secondary-content"]
+    props:
+      - name: cardTitle
+        type: string
+      - name: toggleDisabled
+        type: boolean
+      - name: toggleOpened
+        type: boolean
+      - name: sliderText
+        type: string
+        required: true
+    outputs:
+      - name: toggleChecked
+        type: boolean
+    notes: "Card-form toggle (boolean). Visual toggle with title/description/icon."
+  - name: "sg-file-upload-input"
+    category: input
+    kind: tag
+    file: "libs/design-system-components/src/lib/file-upload/file-upload-input/file-upload-input.component.ts"
+    shadcn_equivalent: file-input
+    slots: []
+    props:
+      - name: multiple
+        default: "false"
+      - name: validationMessageKeys
+        type: "string[]"
+        default: "[]"
+      - name: translationPrefix
+        type: string
+        default: undefined
+      - name: acceptedFormats
+        type: string
+        default: undefined
+    outputs: []
+    notes: "File picker with drag-and-drop."
+  - name: "sg-file-upload-validations"
+    category: input
+    kind: tag
+    file: "libs/design-system-components/src/lib/file-upload/file-upload-validations/file-upload-validations.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: errorsChange
+        type: ErrorsChange
+      - name: validationMessageKeys
+        type: "string[]"
+        required: true
+      - name: translationPrefix
+        type: string
+    outputs: []
+    notes: Validation message list for file uploads.
+  - name: "sg-search-panel"
+    category: input
+    kind: tag
+    file: "libs/design-system-components/src/lib/search-panel/search-panel.component.ts"
+    shadcn_equivalent: command
+    slots: []
+    props: []
+    outputs: []
+    notes: Global / scoped search panel with results list.
+  - name: "sg-search-item"
+    category: input
+    kind: tag
+    file: "libs/design-system-components/src/lib/search-panel/search-item/search-item.component.ts"
+    render: custom
+    slots: [default]
+    props: []
+    outputs: []
+    notes: "Single result entry inside sg-search-panel."
+  - name: "sg-range-rider"
+    category: input
+    kind: tag
+    file: "libs/design-system-components/src/lib/range-rider/range-rider.component.ts"
+    shadcn_equivalent: slider
+    slots: []
+    props:
+      - name: stops
+        type: "ColorBoundary[]"
+      - name: value
+        type: number
+    outputs: []
+    notes: Range slider with two thumbs.
+  - name: "sg-range-scale"
+    category: input
+    kind: tag
+    file: "libs/design-system-components/src/lib/range-scale/range-scale.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: scale
+        type: Range
+        required: true
+      - name: stops
+        type: "RangeScaleStop[]"
+        required: true
+      - name: marker
+        type: RangeScaleMarker
+      - name: tickLabels
+        type: "string[]"
+      - name: tickLabelPlacement
+        type: TickLabelPlacement
+        default: TickLabelPlacement.onTicks
+    outputs: []
+    notes: "Static color/value scale display (legend, not input). Often paired with map layers."
+  - name: "sg-range-indicator"
+    category: input
+    kind: tag
+    file: "libs/design-system-components/src/lib/range-indicator/range-indicator.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: min
+        type: number
+      - name: max
+        type: number
+      - name: target
+        type: number
+      - name: value
+        type: number
+    outputs: []
+    notes: "Single-value indicator on a range."
+  - name: "sg-multiselect-reset-option"
+    category: input
+    kind: tag
+    file: "libs/design-system-components/src/lib/select/multiselect-reset-option/multiselect-reset-option.component.ts"
+    render: custom
+    slots: [default]
+    props: []
+    outputs: []
+    notes: "Reset/clear option used inside multi-select dropdowns."
+  - name: "sg-datepicker-toggle"
+    category: input
+    kind: tag
+    file: "libs/design-system-components/src/lib/datepicker/datepicker-toggle/datepicker-toggle.component.ts"
+    shadcn_equivalent: date-picker
+    slots: []
+    props: []
+    outputs: []
+    notes: Material datepicker open trigger restyled for DSC.
+  - name: "sg-form-error"
+    category: input
+    kind: tag
+    file: "libs/design-system-components/src/lib/forms/error/append-form-error/form-error-component/form-error.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: errorMessage
+        type: string
+    outputs: []
+    notes: "Inline form-error renderer for sg-form-field."
+  - name: "sg-async-validation-status-indicator"
+    category: input
+    kind: tag
+    file: "libs/ui-shared/src/lib/forms/async-validation-status-indicator/async-validation-status-indicator.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: Spinner + checkmark for async form validation.
+  - name: "sg-password-visibility-toggle"
+    category: input
+    kind: tag
+    file: "libs/design-system-components/src/lib/password-visibility-toggle/password-visibility-toggle.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Eye-toggle suffix for password inputs."
+  - name: "sg-country-and-state-input"
+    category: input
+    kind: tag
+    file: "libs/ng-shared/src/lib/user/components/country-and-state-input/country-and-state-input.component.ts"
+    shadcn_equivalent: select
+    slots: []
+    props:
+      - name: form
+        type: UntypedFormGroup
+      - name: showVatId
+        type: boolean
+        default: "false"
+    outputs: []
+    notes: "Two-level country + state cascading select."
+  - name: "sg-date-range"
+    category: input
+    kind: tag
+    file: "libs/ui-shared/src/lib/date-range/date-range.component.ts"
+    shadcn_equivalent: date-range-picker
+    slots: []
+    props:
+      - name: from
+        type: string
+      - name: to
+        type: string
+    outputs: []
+    notes: "Two-date range picker with presets."
+  - name: "sg-timezone"
+    category: input
+    kind: tag
+    file: "libs/ui-shared/src/lib/timezone/timezone.component.ts"
+    shadcn_equivalent: select
+    slots: []
+    props: []
+    outputs: []
+    notes: Timezone picker (IANA).
+  - name: "mat-form-field"
+    category: input
+    kind: material-restyle
+    file: "libs/design-system-components/src/lib/forms/error/append-form-error/to-form-form-field/append-form-error-to-form-field.directive.ts"
+    shadcn_equivalent: form-field
+    slots: []
+    props: []
+    outputs: []
+    notes: "Form-field wrapper. Hosts label, hint, error, and prefix/suffix slots. Use for any DSC text/number/select input."
+  - name: "mat-select"
+    category: input
+    kind: material-restyle
+    file: "libs/design-system-components/src/lib/select/select.directive.ts"
+    shadcn_equivalent: select
+    slots: []
+    props: []
+    outputs: []
+    notes: "Single/multi select dropdown. Wrap in mat-form-field for label + error."
+  - name: "mat-date-range-input"
+    category: input
+    kind: material-restyle
+    file: "libs/design-system-components/src/lib/datepicker/mat-date-range-value-and-validity-updater/mat-date-range-value-and-validity-updater.directive.ts"
+    shadcn_equivalent: date-range-input
+    slots: []
+    props: []
+    outputs: []
+    notes: "Two-date input with start/end controls. Pair with mat-date-range-picker."
+  - name: "input[sgAutocomplete][formControlName]"
+    category: input
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/autocomplete/autocomplete-trigger.directive.ts"
+    raw_selector: "input[sgAutocomplete][formControlName], input[sgAutocomplete][formControl], input[sgAutocomplete][ngModel]"
+    shadcn_equivalent: combobox
+    slots: []
+    props:
+      - name: debounceTimeInMs
+        type: number
+        default: "300"
+      - name: strict
+        type: boolean
+        default: "true"
+      - name: optionContentTemplate
+        type: "TemplateRef<ImplicitContext<Option>>"
+      - name: hidePanelOnValueReset
+        default: "false"
+    outputs:
+      - name: readonly
+        type: Option
+    notes: Autocomplete with sgAutocomplete directive. Triple selector form (formControlName / formControl / ngModel).
+  - name: "mat-button-toggle-group[sgToolButtonToggleGroup]"
+    category: input
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/button-toggle/tool-button-toggle-group/tool-button-toggle-group.directive.ts"
+    shadcn_equivalent: toggle-group
+    slots: []
+    props:
+      - name: horizontalAttachment
+        type: ToolButtonToggleGroupHorizontalAttachment
+      - name: verticalAttachment
+        type: ToolButtonToggleGroupVerticalAttachment
+    outputs: []
+    notes: "Tool-button toggle group. Children are <mat-button-toggle>."
+  - name: "[sgUnitValueInput]"
+    category: input
+    kind: attribute-directive
+    file: "libs/ng-shared/src/lib/shared/directives/unit-value-input.directive.ts"
+    render: custom
+    slots: []
+    props:
+      - name: unit
+        type: Unit
+    outputs: []
+    notes: "Numeric input with unit suffix (e.g. kW, %)."
+  - name: "input[sgMapper]"
+    category: input
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/input-mapper/input-mapper.directive.ts"
+    raw_selector: "input[sgMapper]:not([type]), input[sgMapper][type=\"text\"], input[sgMapper][type=\"search\"], textarea[sgMapper], mat-select[sgMapper]"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Bidirectional value mapper between input and FormControl (used with input-mapper module)."
+  - name: "[sgInputLocaleFormatter]"
+    category: input
+    kind: attribute-directive
+    file: "libs/ng-shared/src/lib/shared/directives/input-locale-formatter.directive.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Locale-aware number formatter for native inputs."
+  - name: "[sgSearchTrigger]"
+    category: input
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/search-panel/search-trigger.directive.ts"
+    render: custom
+    slots: []
+    props:
+      - name: noResultsFoundTranslationKey
+        type: string
+      - name: placeholderTranslationKey
+        type: string
+    outputs: []
+    notes: "Click trigger that opens the global sg-search-panel."
+  - name: "sg-alert-bar"
+    category: feedback
+    kind: tag
+    file: "libs/design-system-components/src/lib/alert-bar/alert-bar.component.ts"
+    shadcn_equivalent: alert
+    slots: []
+    props:
+      - name: alert
+        type: Alert
+        required: true
+    outputs: []
+    notes: "Inline page-level alert with severity + dismiss + action slot."
+  - name: "sg-dialog"
+    category: feedback
+    kind: tag
+    file: "libs/design-system-components/src/lib/dialog/dialog.component.ts"
+    shadcn_equivalent: dialog
+    slots: ["sg-alert-bar", "mat-dialog-content", "mat-dialog-actions", "sg-dialog-footer"]
+    props:
+      - name: blocked
+        type: boolean
+        default: "false"
+      - name: titleTranslation
+        type: Translation
+      - name: closeIconButtonExists
+        type: boolean
+        default: "false"
+      - name: badge
+        type: DialogTitleBadge
+      - name: actions
+        type: DialogResultActions
+        default: DialogConstants.defaultActions
+    outputs: []
+    notes: "Custom dialog shell. Slots: sgDialogTitle, sgDialogContent, sgDialogActions, sgDialogFooter."
+  - name: "sg-standard-dialog"
+    category: feedback
+    kind: tag
+    file: "libs/design-system-components/src/lib/dialog/standard-dialog/standard-dialog.component.ts"
+    shadcn_equivalent: alert-dialog
+    slots: []
+    props: []
+    outputs: []
+    notes: "Pre-composed dialog: title + message + confirm/cancel actions."
+  - name: "sg-dialog-footer"
+    category: feedback
+    kind: tag
+    file: "libs/design-system-components/src/lib/dialog/footer/dialog-footer.component.ts"
+    render: custom
+    slots: [default]
+    props: []
+    outputs: []
+    notes: "Footer slot for sg-dialog."
+  - name: "sg-spinner-text"
+    category: feedback
+    kind: tag
+    file: "libs/design-system-components/src/lib/spinner-text/spinner-text.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: text
+        type: string
+      - name: diameter
+        default: "18"
+    outputs: []
+    notes: Spinner + label for inline loading.
+  - name: "sg-loading-overlay"
+    category: feedback
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/loading-overlay/loading-overlay.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Full-bleed loading overlay used by sg-table."
+  - name: "sg-no-rows-overlay"
+    category: feedback
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/no-rows-overlay/no-rows-overlay.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "No-data overlay used by sg-table."
+  - name: "sg-translation-snackbar"
+    category: feedback
+    kind: tag
+    file: "libs/ng-shared/src/lib/shared/components/translation/translation-snackbar.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "App-level snackbar host used for translation status notifications."
+  - name: "[sgBlockUi]"
+    category: feedback
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/block-ui/block-ui.directive.ts"
+    shadcn_equivalent: loading-overlay
+    slots: []
+    props:
+      - name: blockTarget
+        type: string
+    outputs: []
+    notes: "Block-UI overlay. Apply to a container; pass boolean to toggle."
+  - name: "[sgFullscreenOverlay]"
+    category: feedback
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/directives/fullscreen-overlay/fullscreen-overlay.directive.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: Fullscreen overlay portal target.
+  - name: "sg-menu-section"
+    category: navigation
+    kind: tag
+    file: "libs/design-system-components/src/lib/menu/menu-section/menu-section.component.ts"
+    render: custom
+    slots: [default]
+    props: []
+    outputs: []
+    notes: Section header inside menu/dropdown lists.
+  - name: "sg-menu-filter"
+    category: navigation
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/menu-filter/menu-filter.component.ts"
+    render: custom
+    slots: [default]
+    props:
+      - name: filterName
+        type: string
+        required: true
+      - name: filterTooltip
+        type: "string | undefined"
+        default: undefined
+      - name: filterMode
+        type: ExternalFilterMode
+        default: undefined
+      - name: badge
+        type: "string | undefined"
+        default: undefined
+      - name: displayMenu
+        type: boolean
+        default: "true"
+      - name: hasInitialValue
+        type: boolean
+        default: "false"
+    outputs:
+      - name: remove
+        type: void
+      - name: menuOpened
+        type: void
+    notes: "Filter menu host for sg-table column headers."
+  - name: "sg-menu-text-filter"
+    category: navigation
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/filters/menu-filters/menu-text-filter/menu-text-filter.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Text input filter inside sg-menu-filter."
+  - name: "sg-menu-boolean-filter"
+    category: navigation
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/filters/menu-filters/menu-boolean-filter/menu-boolean-filter.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Boolean (yes/no) filter inside sg-menu-filter."
+  - name: "sg-menu-daterange-filter"
+    category: navigation
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/filters/menu-filters/menu-daterange-filter/menu-daterange-filter.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Date-range filter inside sg-menu-filter."
+  - name: "sg-menu-multiselect-filter"
+    category: navigation
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/filters/menu-filters/menu-multiselect-filter/menu-multiselect-filter.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: initialValue
+        type: "string | string[], string[]"
+        default: >
+  undefined, {
+      transform: (value: string | string[]) => (Array.isArray(value) ? value : [value].filter(isNotNil)
+    outputs: []
+    notes: "Multi-select filter inside sg-menu-filter."
+  - name: "sg-menu-autocomplete-filter"
+    category: navigation
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/filters/menu-filters/menu-autocomplete-filter/menu-autocomplete-filter.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Autocomplete filter inside sg-menu-filter."
+  - name: "sg-filters-selection"
+    category: navigation
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/filters/filters-selection/filters-selection.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: initialFilter
+        type: object
+      - name: appliedFilter
+        type: object
+    outputs:
+      - name: filterSelectionChanged
+        type: object
+      - name: filterReset
+        type: void
+    notes: "Active-filters chip strip above sg-table."
+  - name: "sg-boolean-filter"
+    category: navigation
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/filters/boolean/boolean-filter.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Standalone boolean filter (non-menu)."
+  - name: "mat-tab-group"
+    category: navigation
+    kind: material-restyle
+    file: "libs/design-system-components/src/lib/tabs/tab-group/tab-group.directive.ts"
+    shadcn_equivalent: tabs
+    slots: []
+    props:
+      - name: selectedTabChangeEnabled
+        default: "true"
+    outputs:
+      - name: beforeSelectedTabChange
+        type: void
+    notes: "Tab group. Children are <mat-tab>."
+  - name: "[mat-tab-nav-bar]"
+    category: navigation
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/tabs/tab-nav-bar/tab-nav-bar.directive.ts"
+    shadcn_equivalent: tabs-nav
+    slots: []
+    props: []
+    outputs: []
+    notes: "Tabs as a nav bar (route-based). Children are <a mat-tab-link>."
+  - name: "mat-horizontal-stepper"
+    category: navigation
+    kind: material-restyle
+    file: "libs/design-system-components/src/lib/stepper/stepper.directive.ts"
+    shadcn_equivalent: stepper
+    slots: []
+    props: []
+    outputs: []
+    notes: "Horizontal stepper. Children are <mat-step>."
+  - name: "sg-mega-button"
+    category: buttons
+    kind: tag
+    file: "libs/design-system-components/src/lib/mega-button/mega-button.component.ts"
+    shadcn_equivalent: button
+    slots: []
+    props:
+      - name: logotype
+        type: AppImage
+        required: true
+    outputs:
+      - name: btnClick
+        type: void
+    notes: Oversized CTA button. Icon + title + description.
+  - name: "sg-meta-button"
+    category: buttons
+    kind: tag
+    file: "libs/design-system-components/src/lib/meta-button/meta-button.component.ts"
+    shadcn_equivalent: button
+    slots: [default]
+    props:
+      - name: leftIcon
+        type: string
+      - name: rightIcon
+        type: string
+      - name: showRightIconOnHover
+        default: "false"
+      - name: outlined
+        default: "false"
+      - name: raised
+        default: "false"
+    outputs:
+      - name: action
+        type: void
+    notes: "Compact metadata-style button (e.g. trailing chip-like trigger)."
+  - name: "sg-split-button"
+    category: buttons
+    kind: tag
+    file: "libs/design-system-components/src/lib/button/split/split-button.component.ts"
+    shadcn_equivalent: split-button
+    slots: [button, ".split-button-secondary"]
+    props: []
+    outputs: []
+    notes: Primary action + dropdown caret combo.
+  - name: "sg-tool-button-group"
+    category: buttons
+    kind: tag
+    file: "libs/design-system-components/src/lib/button/tool-button-group/tool-button-group.directive.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: Group container for sgToolButton variants.
+  - name: "sg-close-content-button"
+    category: buttons
+    kind: tag
+    file: "libs/design-system-components/src/lib/directives/closable-content/closable-content-button.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs:
+      - name: readonly
+        type: void
+    notes: "Dismiss button used by closable-content directive."
+  - name: "button[mat-button]"
+    category: buttons
+    kind: material-restyle
+    file: "libs/design-system-components/src/lib/button/basic/basic-button.directive.ts"
+    raw_selector: "button[mat-button]:not([color]), a[mat-button]:not([color])"
+    shadcn_equivalent: button
+    slots: []
+    props: []
+    outputs: []
+    notes: Default DSC button. Variants via Material color attribute.
+  - name: "button[mat-icon-button]"
+    category: buttons
+    kind: material-restyle
+    file: "libs/design-system-components/src/lib/button/icon/icon-button.directive.ts"
+    raw_selector: "button[mat-icon-button], a[mat-icon-button]"
+    shadcn_equivalent: icon-button
+    slots: []
+    props: []
+    outputs: []
+    notes: "Icon-only button (round). Wraps a single mat-icon."
+  - name: "button[sgToolButton][mat-icon-button]"
+    category: buttons
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/button/tool-button-group/tool-button/icon/icon-tool-button.directive.ts"
+    shadcn_equivalent: ghost-icon-button
+    slots: []
+    props: []
+    outputs: []
+    notes: "Tool button (icon variant) — denser, lower-emphasis than mat-icon-button."
+  - name: "button[sgToolButton][mat-stroked-button]"
+    category: buttons
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/button/tool-button-group/tool-button/stroked/stroked-tool-button.directive.ts"
+    shadcn_equivalent: outline-button
+    slots: []
+    props: []
+    outputs: []
+    notes: Tool button (stroked variant) — outlined chrome for inline toolbars.
+  - name: "button[sgCopyTable]"
+    category: buttons
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/datatable/directives/copy-table.directive.ts"
+    render: custom
+    slots: []
+    props:
+      - name: targetElements
+        type: "DatatableComponent<unknown, unknown>[]"
+        required: true
+    outputs:
+      - name: copiedToClipboard
+        type: void
+    notes: "Button that copies a table's data to clipboard as TSV/CSV."
+  - name: "button[sgSubmitButton]"
+    category: buttons
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/forms/error/context/submit-button.directive.ts"
+    raw_selector: "button:not([type=\"button\"])[sgSubmitButton]"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Form submit button with built-in pending/disabled handling."
+  - name: "sg-highcharts"
+    category: charts
+    kind: tag
+    file: "libs/ui-shared/src/lib/highcharts/highcharts.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: chartConfig
+        type: HighchartsConfig
+      - name: destroyOnChange
+        default: "false"
+      - name: reflow
+        default: "false"
+    outputs: []
+    notes: "Highcharts wrapper. Pass `options` (Highcharts.Options)."
+  - name: "sg-highcharts-with-export"
+    category: charts
+    kind: tag
+    file: "libs/ui-shared/src/lib/highcharts-with-export/highcharts-with-export.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: chartConfig
+        type: "Highcharts.Options | undefined"
+      - name: destroyOnChange
+        default: "false"
+      - name: exportConfig
+        type: ChartExportConfig
+      - name: reflow
+        default: "false"
+    outputs: []
+    notes: "sg-highcharts + export menu (PNG / SVG / CSV)."
+  - name: "sg-sankey"
+    category: charts
+    kind: tag
+    file: "libs/design-system-components/src/lib/sankey/sankey.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: options
+        type: "SankeyChartConfig<T>"
+      - name: translations
+        type: Translation
+    outputs: []
+    notes: "Sankey diagram (d3-based, custom). Used in PV energy flow."
+  - name: "sg-monthly-minichart"
+    category: charts
+    kind: tag
+    file: "libs/ng-shared/src/lib/shared/components/monthly-minichart/monthly-minichart.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: layer
+        type: "Pick<DataLayer, 'chart'>"
+      - name: data
+        type: "number[]"
+      - name: dataStats
+        type: DataStats
+      - name: width
+        type: number
+      - name: height
+        type: number
+      - name: renderer
+        type: MinichartRenderer
+        default: "'highcharts'"
+    outputs: []
+    notes: Compact monthly bar chart for tables/cards.
+  - name: "sg-export-actions"
+    category: charts
+    kind: tag
+    file: "libs/ui-shared/src/lib/charts/export-actions/export-actions.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: Export menu (PNG/SVG/CSV) for chart wrappers.
+  - name: "sg-chart-export-menu-item"
+    category: charts
+    kind: tag
+    file: "libs/ui-shared/src/lib/charts/chart-export-menu-item/chart-export-menu-item.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: label
+        default: "'PNG'"
+    outputs:
+      - name: readonly
+        type: void
+    notes: "Single export option (used inside sg-export-actions)."
+  - name: "sg-portal"
+    category: utility
+    kind: tag
+    file: "libs/design-system-components/src/lib/portal/components/portal.component.ts"
+    render: custom
+    slots: [default]
+    props:
+      - name: id
+        type: string
+    outputs: []
+    notes: Teleport content into a named outlet.
+  - name: "sg-portal-outlet"
+    category: utility
+    kind: tag
+    file: "libs/design-system-components/src/lib/portal/components/portal-outlet.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: id
+        type: string
+    outputs: []
+    notes: "Receiver for sg-portal."
+  - name: "sg-trademark"
+    category: utility
+    kind: tag
+    file: "libs/ui-shared/src/lib/trademark/trademark.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: version
+        type: string
+        required: true
+      - name: links
+        type: "{ termsOfUse: string; website: string }"
+        required: true
+    outputs: []
+    notes: ® / ™ badge inline.
+  - name: "sg-quick-links"
+    category: utility
+    kind: tag
+    file: "libs/ui-shared/src/lib/quick-links/quick-links.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: links
+    outputs: []
+    notes: Inline link cluster (e.g. doc/help shortcuts).
+  - name: "sg-product"
+    category: utility
+    kind: tag
+    file: "libs/ui-shared/src/lib/product/product.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: product
+        default: "undefined, { transform: (value: string | undefined) => value?.toLowerCase() }"
+    outputs: []
+    notes: "Product label (icon + name) for app-switcher style displays."
+  - name: "sg-density"
+    category: utility
+    kind: tag
+    file: "libs/design-system-components/src/lib/core/density/density.directive.ts"
+    render: custom
+    slots: []
+    props:
+      - name: density
+        type: Density
+        required: true
+    outputs: []
+    notes: Density modifier wrapper (high/standard/low). Affects child Material density.
+  - name: "sg-copy-to-clipboard-button"
+    category: utility
+    kind: tag
+    file: "libs/ng-shared/src/lib/copy-to-clipboard/components/copy-to-clipboard-button/copy-to-clipboard-button.component.ts"
+    shadcn_equivalent: button
+    slots: []
+    props:
+      - name: text
+        type: string
+    outputs: []
+    notes: Button that copies a value and toasts.
+  - name: "[sgClosableContent]"
+    category: utility
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/directives/closable-content/closable-content.directive.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: Wrapper that adds a close button + collapse animation.
+  - name: "[sgScrollContainer]"
+    category: utility
+    kind: attribute-directive
+    file: "libs/ng-shared/src/lib/shared/directives/scroll-container.directive.ts"
+    render: custom
+    slots: []
+    props:
+      - name: size
+        type: "'xs' | 'sm' | 'md' | 'custom'"
+    outputs: []
+    notes: Scroll container with shadow indicators on overflow edges.
+  - name: "[sgTruncatedTextTooltip]"
+    category: utility
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/table/tooltip/truncated-text-tooltip.directive.ts"
+    render: custom
+    slots: []
+    props:
+      - name: sgTruncatedTextTooltip
+        type: "{ params: ICellRendererParams; tooltipText?: string }"
+        required: true
+    outputs: []
+    notes: "Truncate-with-ellipsis pattern + auto tooltip when truncated."
+  - name: "[sgFeatureFlag]"
+    category: utility
+    kind: attribute-directive
+    file: "libs/ng-shared/src/lib/shared/directives/feature-flag.directive.ts"
+    render: custom
+    slots: []
+    props:
+      - name: flagsToCheck
+        type: "(keyof (FeatureFlagWebappConfig & SharedFeatureFlagWebappConfig))[]"
+        default: undefined
+    outputs: []
+    notes: Conditionally show/hide based on a feature flag.
+  - name: "[sgBorderlessCard]"
+    category: utility
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/card/borderless-card.directive.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Borderless variant marker for sg-card."
+  - name: "sg-exportable-context"
+    category: utility
+    kind: tag
+    file: "libs/ui-shared/src/lib/charts/export/exportable-context.directive.ts"
+    raw_selector: "sg-exportable-context, [sgExportableContext]"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Wraps content as an exportable region (PNG/PDF). Dual selector: tag and [sgExportableContext]."
+  - name: "[sgEntityTable]"
+    category: table-presets
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/table/table-types/entity/entity-table.directive.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Entity-table preset for sg-table — opinionated columns + actions wired to entity store."
+  - name: "[sgHighDensityTable]"
+    category: table-presets
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/table/table-types/entity/high-density-table.directive.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "High-density preset for sg-table — tighter row height."
+  - name: "[sgManagerTable]"
+    category: table-presets
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/table/table-types/manager-table.directive.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Manager preset for sg-table — toolbar + bulk actions."
+  - name: "[sgDataTable]"
+    category: table-presets
+    kind: attribute-directive
+    file: "libs/design-system-components/src/lib/table/table-types/data-table.directive.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Data-table preset for sg-table — read-only data view."
+
+# ──────────────────────────────────────────────────────────────
+# Curation gaps
+# ──────────────────────────────────────────────────────────────
+# These selectors exist in source but are excluded from this manifest
+# as internal sub-components, table cell-renderers, app-domain features,
+# or storybook stubs. Re-include in a future pass if proto-bench needs them.
+excluded_selectors:
+  - "[formControlName][sgDisabled]"
+  - "[formControl][sgMaxDecimalsValidator]"
+  - "[formGroup][sgAppendFormError]"
+  - "[mat-table][matSort]"
+  - "[matStepperNext]"
+  - "[ngModel][sgIntegerValidator]"
+  - "[ngModel][sgValidatorsComposer]"
+  - "[sgAutoFocus]"
+  - "[sgCardContentGridCell]"
+  - "[sgCardContentGrid]"
+  - "[sgDebounceClick]"
+  - "[sgEntityTable][visibleRowsCount]"
+  - "[sgExternalLink]"
+  - "[sgForm]"
+  - "[sgScrollToAnchor]"
+  - "[sgStopPropagation]"
+  - "[sgTableMinHeightUnset]"
+  - "[sgValueAndValidityUpdater]"
+  - "ag-grid-angular"
+  - "form[sgAtLeastOneNotEmpty]"
+  - "form[sgForm]"
+  - "form[sgForm][formGroup]"
+  - "input[formControlName][sgStoreFormError]"
+  - "mat-checkbox[sgAppendFormError]"
+  - "mat-select mat-option[model]"
+  - "mat-tree-node[matTreeNodePadding]"
+  - "sg-action-menu"
+  - "sg-actions-cell-renderer"
+  - "sg-admin-customer-autocomplete"
+  - "sg-advanced-option-content"
+  - "sg-analyst-subscription-devices"
+  - "sg-api-edit-general"
+  - "sg-api-edit-user-tokens"
+  - "sg-api-subscription-editor"
+  - "sg-api-subscription-table"
+  - "sg-api-subscriptions-container"
+  - "sg-app-subscription-token-list"
+  - "sg-app-subscription-users"
+  - "sg-applications-visibility"
+  - "sg-apps-and-subscriptions"
+  - "sg-button-cell-renderer"
+  - "sg-card-with-data-table"
+  - "sg-checkbox-cell-renderer"
+  - "sg-chip-set-cell-renderer"
+  - "sg-comming-soon"
+  - "sg-company-list"
+  - "sg-consultancy-service-dialog"
+  - "sg-consultancy-service-parameters"
+  - "sg-consultancy-service-type"
+  - "sg-copy-to-clipboard-cell-renderer"
+  - "sg-dataset-count-info"
+  - "sg-forecast-monitor-api-subscription-detail"
+  - "sg-forecast-monitor-api-token"
+  - "sg-free-trial-list"
+  - "sg-grid-12-11-story"
+  - "sg-grid-16-7-story"
+  - "sg-grid-8-15-story"
+  - "sg-grid-action-column-story"
+  - "sg-grid-icons-buttons-story"
+  - "sg-grid-no-leading-track-story"
+  - "sg-grid-row-next-story"
+  - "sg-grid-two-column-story"
+  - "sg-icon-cell-content"
+  - "sg-icon-cell-renderer"
+  - "sg-icon-hover-text-cell-renderer"
+  - "sg-inline-badge-cell-renderer"
+  - "sg-layout-content[sgLayoutContentWidth]"
+  - "sg-link-cell-renderer"
+  - "sg-muted"
+  - "sg-no-content"
+  - "sg-no-value"
+  - "sg-personal-information-dialog"
+  - "sg-profile"
+  - "sg-profile-detail"
+  - "sg-project-data-key"
+  - "sg-report-map"
+  - "sg-security-detail"
+  - "sg-select-cell-renderer"
+  - "sg-site-location-map"
+  - "sg-slide-toggle-cell-renderer"
+  - "sg-subscription-detail-dialog"
+  - "sg-subscription-list"
+  - "sg-success-message"
+  - "sg-table[datasource]"
+  - "sg-text-button-cell-renderer"
+  - "sg-text-cell-content"
+  - "sg-text-cell-renderer"
+  - "sg-text-icon-cell-renderer"
+  - "sg-toggle-data-units-dialog-content"
+  - "sg-tool-button-toggle-sub-group"
+  - "sg-upgrade-hint-card"
+  - "sg-user-action-info"
+  - "sg-user-action-list"
+
+# ──────────────────────────────────────────────────────────────
+# Known follow-ups
+# ──────────────────────────────────────────────────────────────
+# 1. Directive- and Material-restyle primitives are included with `kind`:
+#      tag                  — sg-* element (e.g. sg-table, sg-dialog)
+#      attribute-directive  — selector applied to a host element ([sgX], button[sgX])
+#      material-restyle     — Material element restyled by DSC (mat-icon, mat-select). Public API
+#                              = Material's public API + DSC tokens; consult @angular/material docs.
+# 2. Mechanical/behavioral directives ([sgAutoFocus], [sgDebounceClick],
+#    form-validator composers, etc) are excluded — they aren't visual primitives.
+# 3. Examples field is sparse — populate as bench bindings land.
+# 4. Outputs are minimally extracted (regex-first). Hand-verify before treating
+#    as authoritative — some EventEmitters declared via getter or computed are missed.
+# 5. Curation map (/tmp/dsc-manifest/curation.json) is currently scratch. Promote
+#    to solargis2-dsc/scripts/manifest/ on next iteration to make regen reproducible.
