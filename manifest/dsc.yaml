@@ -5,9 +5,9 @@
 # Tracker: CC-5 (DSC manifest)
 
 version: 0.1.0
-generated_at: 2026-04-30T14:44:00.123Z
+generated_at: 2026-04-30T14:56:19.856Z
 source_repo: solargis2-dsc
-source_commit: f78bdab3917c6e74a5d1e1745f7ff18337d7fa3f
+source_commit: 228a8ce3fc3c83ee8838d1d8fccaf72e54ac5a80
 
 # Categories used by proto-bench renderer:
 #   chrome        — app shell / header / nav / sidenav
@@ -20,6 +20,7 @@ source_commit: f78bdab3917c6e74a5d1e1745f7ff18337d7fa3f
 #   charts        — Highcharts wrappers and chart-domain helpers
 #   utility       — portal, helpers, decorative
 #   table-presets — sg-table preset directives ([sgEntityTable], etc)
+#   cell-renderers — sg-table cell-renderer components (one per column type)
 #
 # Field reference:
 #   kind          — tag | attribute-directive | material-restyle
@@ -1691,6 +1692,175 @@ components:
     props: []
     outputs: []
     notes: "Data-table preset for sg-table — read-only data view."
+  - name: "sg-text-cell-renderer"
+    category: cell-renderers
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/cell-renderers/text-cell-renderer/text-cell-renderer.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Default text cell. Supports multiline, ellipsis, hover-tooltip on truncation."
+  - name: "sg-icon-cell-renderer"
+    category: cell-renderers
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/cell-renderers/icon-cell-renderer/icon-cell-renderer.component.ts"
+    shadcn_equivalent: icon
+    slots: []
+    props: []
+    outputs: []
+    notes: "Icon-only cell. `icon` resolved from row data; tooltip optional."
+  - name: "sg-text-icon-cell-renderer"
+    category: cell-renderers
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/cell-renderers/text-icon-cell-renderer/text-icon-cell-renderer.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: Icon + text combination cell.
+  - name: "sg-icon-hover-text-cell-renderer"
+    category: cell-renderers
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/cell-renderers/editable-text-cell-renderer/icon-hover-text-cell-renderer.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Icon by default, reveals editable text on hover. Used for inline edit."
+  - name: "sg-link-cell-renderer"
+    category: cell-renderers
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/cell-renderers/link-cell-renderer/link-cell-renderer.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: Cell rendering as anchor link (router or external).
+  - name: "sg-button-cell-renderer"
+    category: cell-renderers
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/cell-renderers/button-cell-renderer/button-cell-renderer.component.ts"
+    shadcn_equivalent: button
+    slots: []
+    props: []
+    outputs: []
+    notes: "Cell containing a button that emits a row-scoped action."
+  - name: "sg-text-button-cell-renderer"
+    category: cell-renderers
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/cell-renderers/text-button-cell-renderer/text-button-cell-renderer.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Text-styled clickable cell (link-like button)."
+  - name: "sg-checkbox-cell-renderer"
+    category: cell-renderers
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/cell-renderers/checkbox-cell-renderer/checkbox-cell-renderer.component.ts"
+    shadcn_equivalent: checkbox
+    slots: []
+    props: []
+    outputs: []
+    notes: "Boolean checkbox cell with row-update emission."
+  - name: "sg-slide-toggle-cell-renderer"
+    category: cell-renderers
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/cell-renderers/slide-toggle-cell-renderer/slide-toggle-cell-renderer.component.ts"
+    shadcn_equivalent: switch
+    slots: []
+    props: []
+    outputs: []
+    notes: "Boolean slide-toggle cell."
+  - name: "sg-select-cell-renderer"
+    category: cell-renderers
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/cell-renderers/select-cell-renderer/select-cell-renderer.component.ts"
+    shadcn_equivalent: select
+    slots: []
+    props: []
+    outputs: []
+    notes: Inline select cell. Options come from column config.
+  - name: "sg-chip-set-cell-renderer"
+    category: cell-renderers
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/cell-renderers/chips-cell-renderer/chip-set-cell-renderer.component.ts"
+    shadcn_equivalent: badge-list
+    slots: []
+    props: []
+    outputs: []
+    notes: Renders a list of chips/badges in a single cell.
+  - name: "sg-inline-badge-cell-renderer"
+    category: cell-renderers
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/cell-renderers/inline-badge-cell-renderer/inline-badge-cell-renderer.component.ts"
+    shadcn_equivalent: badge
+    slots: []
+    props: []
+    outputs: []
+    notes: "Single status badge cell. Color via sg-color-status-* tokens."
+  - name: "sg-copy-to-clipboard-cell-renderer"
+    category: cell-renderers
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/cell-renderers/copy-to-clipboard-cell-renderer/copy-to-clipboard-cell-renderer.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: Cell that copies its value on click + toasts.
+  - name: "sg-actions-cell-renderer"
+    category: cell-renderers
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/cell-renderers/actions-cell-renderer/actions-cell-renderer.component.ts"
+    render: custom
+    slots: []
+    props: []
+    outputs: []
+    notes: "Per-row action menu/icons. Conditional actions via `actionsForRow` callback."
+  - name: "sg-action-menu"
+    category: cell-renderers
+    kind: tag
+    file: "libs/design-system-components/src/lib/table/cell-renderers/actions-cell-renderer/action-menu/action-menu.component.ts"
+    render: custom
+    slots: []
+    props:
+      - name: data
+        type: "ICellRendererParams['data']"
+      - name: menuIcon
+        type: string
+        default: "'more_vert'"
+      - name: menuSections
+        type: "ActionMenuSection[]"
+        default: "[]"
+      - name: disabled
+        default: "false"
+    outputs: []
+    notes: "Action sub-menu used inside sg-actions-cell-renderer (and elsewhere). Sectioned action list."
+
+# ──────────────────────────────────────────────────────────────
+# Gaps requested by proto-bench (no DSC primitive yet)
+# ──────────────────────────────────────────────────────────────
+# These are primitives Claude van Context flagged as needed for prototyping
+# but DSC does not currently expose. Render via composition for now; track
+# in CC-N follow-ups if first-class primitives are wanted.
+gaps_requested:
+  - name: "sg-user"
+    description: "Compact user identity (avatar + name). Used in audit trails, owner columns, comments. No DSC primitive — currently composed ad-hoc per call site."
+  - name: "sg-user-group"
+    description: "Stacked user avatars (e.g. 3+ overflow). Same status as sg-user."
+  - name: "sg-avatar"
+    description: "Single avatar atom (image / initials fallback). Foundation for sg-user / sg-user-group."
+  - name: "sg-attribution-badge"
+    description: "Dataset attribution badge (e.g. 'Solargis 3.0', 'NASA POWER'). Surfaces the data provenance in a consistent visual."
+  - name: "sg-scene-snapshot"
+    description: "Scene/image snapshot tile (e.g. PV layout preview). Currently rendered ad-hoc with <img>."
+  - name: "sg-progress-cell"
+    description: "Inline progress bar cell. Material's mat-progress-bar can stand in but proto-bench wants a cell-renderer wrapper."
+  - name: "sg-table-data-status"
+    description: "DataStatus widget for sg-table footer/header (loading/failed/no-data). Currently overlay components handle this in pieces."
+  - name: "sg-card-trailing-badge"
+    description: "Card-header pattern with trailing badge. Currently composed via sg-section + sg-inline-badge — proposed as first-class slot."
 
 # ──────────────────────────────────────────────────────────────
 # Curation gaps
@@ -1725,8 +1895,6 @@ excluded_selectors:
   - "mat-checkbox[sgAppendFormError]"
   - "mat-select mat-option[model]"
   - "mat-tree-node[matTreeNodePadding]"
-  - "sg-action-menu"
-  - "sg-actions-cell-renderer"
   - "sg-admin-customer-autocomplete"
   - "sg-advanced-option-content"
   - "sg-analyst-subscription-devices"
@@ -1739,16 +1907,12 @@ excluded_selectors:
   - "sg-app-subscription-users"
   - "sg-applications-visibility"
   - "sg-apps-and-subscriptions"
-  - "sg-button-cell-renderer"
   - "sg-card-with-data-table"
-  - "sg-checkbox-cell-renderer"
-  - "sg-chip-set-cell-renderer"
   - "sg-comming-soon"
   - "sg-company-list"
   - "sg-consultancy-service-dialog"
   - "sg-consultancy-service-parameters"
   - "sg-consultancy-service-type"
-  - "sg-copy-to-clipboard-cell-renderer"
   - "sg-dataset-count-info"
   - "sg-forecast-monitor-api-subscription-detail"
   - "sg-forecast-monitor-api-token"
@@ -1762,11 +1926,7 @@ excluded_selectors:
   - "sg-grid-row-next-story"
   - "sg-grid-two-column-story"
   - "sg-icon-cell-content"
-  - "sg-icon-cell-renderer"
-  - "sg-icon-hover-text-cell-renderer"
-  - "sg-inline-badge-cell-renderer"
   - "sg-layout-content[sgLayoutContentWidth]"
-  - "sg-link-cell-renderer"
   - "sg-muted"
   - "sg-no-content"
   - "sg-no-value"
@@ -1776,17 +1936,12 @@ excluded_selectors:
   - "sg-project-data-key"
   - "sg-report-map"
   - "sg-security-detail"
-  - "sg-select-cell-renderer"
   - "sg-site-location-map"
-  - "sg-slide-toggle-cell-renderer"
   - "sg-subscription-detail-dialog"
   - "sg-subscription-list"
   - "sg-success-message"
   - "sg-table[datasource]"
-  - "sg-text-button-cell-renderer"
   - "sg-text-cell-content"
-  - "sg-text-cell-renderer"
-  - "sg-text-icon-cell-renderer"
   - "sg-toggle-data-units-dialog-content"
   - "sg-tool-button-toggle-sub-group"
   - "sg-upgrade-hint-card"
